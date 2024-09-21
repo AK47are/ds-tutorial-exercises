@@ -1,11 +1,13 @@
 ## 说明
-使用教材：数据结构教程第六版（李春葆）
-
-仓库内容：全书练习题,实验题和leetcode题。练习题在 excs.md 中，实验题就在 chapter_题号 中, leetcode 题在 leetcode 文件夹中 。
-
 如果答案错误或者有其他错误欢迎提出 issue。
 
-全部题目 pdf 版在 docs 文件夹中。
+使用题目教材：数据结构教程第六版（李春葆）
+
+仓库内容：全书练习题,实验题和leetcode题。练习题在 excs.md 中，实验题在 labs 文件夹中，leetcode 题在 leetcode 文件夹中。
+
+项目使用工具：make, g++, markdown, git。
+
+全部题目 pdf 版以及各种容器类的实现打包成库放在了 docs 中。注意库是静态库需要自行告诉编译器库的位置中。 
 
 ## 资源
 
