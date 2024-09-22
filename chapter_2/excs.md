@@ -442,7 +442,7 @@ void LocateNode(DLinkNode*& h, ElemType x) { // 简单起见，认为值为 x �
 
 #### 答案：
 ```cpp
-void fun(CLinkNode* hc, CLinkNode* ha, CLinkNoDe* hb) {
+void fun(CLinkNode* hc, CLinkNode* ha, CLinkNode* hb) {
   auto p = ha;
   while (p->next != ha) p = p->next;
   p->next = hb->next;

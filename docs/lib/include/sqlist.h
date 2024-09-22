@@ -11,7 +11,6 @@ class sqlist {
 
  public:
   sqlist() : length(0) {}
-
   sqlist(std::initializer_list<T> il) {
     int pos = 0;
     for (auto p = il.begin(); p != il.end() && pos != MAX; ++pos, ++p)
@@ -31,19 +30,19 @@ class sqlist {
 
   T& operator[](const size_t pos) { return arr[pos]; }
 
-  bool insert(T x, const size_t pos) {
-    if (pos > length) return false;
+  sqlist& insert(const T x, const size_t pos) {
+    if (pos > length) return *this;
     for (int i = length; i > pos; --i) arr[i] = arr[i - 1];
     arr[pos] = x;
     ++length;
-    return true;
+    return *this;
   }
 
-  bool erase(const size_t pos) {
-    if (pos > length) return false;
+  sqlist& erase(const size_t pos) {
+    if (pos > length) return *this;
     for (int i = pos; i < length - 1; ++i) arr[i] = arr[i + 1];
     --length;
-    return true;
+    return *this;
   }
 
   size_t index_find(const T i) {
@@ -52,7 +51,10 @@ class sqlist {
     std::cerr << "No find!" << "\n";
     return length;
   }
-  friend std::ostream& operator<<(std::ostream& os, sqlist& s) {};  // TODO:
+  friend std::ostream& operator<<(std::ostream& os, sqlist& s) {
+    for (size_t i = 0; i < s.length; ++i) os << " " << s.arr[i];
+    return os;
+  }
 
   T& front() { return arr[0]; }
   T& back() { return arr[length - 1]; }
