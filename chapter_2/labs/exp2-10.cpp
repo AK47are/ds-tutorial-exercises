@@ -9,6 +9,9 @@ struct Term {
   Term operator+(Term& term) {
     return Term{coneffict + term.coneffict, exponent};
   }
+  Term operator*(Term& term) {
+    return Term{coneffict * term.coneffict, exponent * term.exponent};
+  }
   bool operator<(Term& term) { return (exponent < term.exponent); }
   bool operator>(Term& term) { return (exponent > term.exponent); }
   bool operator==(Term& term) { return (exponent == term.exponent); }
@@ -39,39 +42,13 @@ void PloySort(LinkList<Term>& l) {
 }
 
 template <typename T>
-void UnionSet(LinkNode<T>* A, LinkNode<T>* B, LinkNode<T>* C) {
-  auto c_rear = C;
-  auto a_cur = A->next;
-  auto b_cur = B->next;
-  while (a_cur && b_cur) {
-    if (a_cur->data > b_cur->data) {
-      c_rear->next = new LinkNode<T>(c_rear, a_cur->data, nullptr);
-      c_rear = c_rear->next;
-      c_rear->data = a_cur->data;
-      a_cur = a_cur->next;
-    } else if (a_cur->data < b_cur->data) {
-      c_rear->next = new LinkNode<T>(c_rear, b_cur->data, nullptr);
-      c_rear = c_rear->next;
-      b_cur = b_cur->next;
-    } else {
-      if (a_cur->data.coneffict + b_cur->data.coneffict != 0) {
-        c_rear->next =
-            new LinkNode<T>(c_rear, a_cur->data + b_cur->data, nullptr);
-        c_rear = c_rear->next;
-      }
-      a_cur = a_cur->next, b_cur = b_cur->next;
+void Multiple(LinkNode<T>* A, LinkNode<T>* B, LinkNode<T>* C) {
+  auto c_cur = C;
+  for (auto a_cur = A->next; a_cur != nullptr; a_cur = a_cur->next)
+     for (auto b_cur = B->next; b_cur != nullptr; b_cur = b_cur->next) {
+      c_cur->next = new LinkNode<T>(nullptr, a_cur->data * b_cur->data, nullptr);
+      c_cur = c_cur->next;
     }
-  }
-  while (a_cur) {
-    c_rear->next = new LinkNode<T>(c_rear, a_cur->data, nullptr);
-    c_rear = c_rear->next;
-    a_cur = a_cur->next;
-  }
-  while (b_cur) {
-    c_rear->next = new LinkNode<T>(c_rear, b_cur->data, nullptr);
-    c_rear = c_rear->next;
-    b_cur = b_cur->next;
-  }
 }
 
 int main() {
@@ -82,6 +59,14 @@ int main() {
   PloySort(lb);
   std::cout << lb << "\n";
   LinkList<Term> lc;
-  UnionSet(la.PrevNode(-1), lb.PrevNode(-1), lc.PrevNode(-1));
+  Multiple(la.PrevNode(-1), lb.PrevNode(-1), lc.PrevNode(-1));
+  PloySort(lc);
+  LinkNode<Term>* temp;
+  for (auto cur = lc.Begin(); cur->next != nullptr; cur = cur->next)
+    if (cur->data == cur->next->data) {
+      cur->data.coneffict += cur->next->data.coneffict;
+      temp = cur->SkipNext();
+      delete temp;
+    }
   std::cout << lc << "\n";
 }

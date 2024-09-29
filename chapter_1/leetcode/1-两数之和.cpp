@@ -13,7 +13,7 @@ class Solution {
       sum = nums[index[0]] + nums[index[1]];
       // cout << sum << " " << index[0] << " " << index[1] << "\n";
       if (sum == target) {
-          int n1 = nums[index[0]], n2 = nums[index[1]];
+        int n1 = nums[index[0]], n2 = nums[index[1]];
         if (nums[index[0]] != nums[index[1]])
           for (int i = 0; i < nums.size(); ++i) {
             if (temp[i] == n1) index[0] = i;
@@ -34,7 +34,7 @@ class Solution {
       }
       if (sum > target)
         --index[1];
-      else 
+      else
         ++index[0];
     }
   }

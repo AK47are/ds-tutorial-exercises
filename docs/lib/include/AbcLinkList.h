@@ -16,10 +16,12 @@ class AbcLinkList {
 
  protected:
   Node head_;
+  Node* end_;  // NOTE: 派生类中必须初始化指向尾节点 next 指向的位置。
 
  public:
-  AbcLinkList() = default;
-  AbcLinkList(std::initializer_list<T> list) {
+  AbcLinkList() = delete;
+  AbcLinkList(Node* end) : end_(end) {}
+  AbcLinkList(std::initializer_list<T> list, Node* end) : end_(end) {
     Node* rear = &head_;
     for (auto cur = list.begin(); cur != list.end(); ++cur) {
       rear->next = new Node(rear, *cur, End());
@@ -29,7 +31,7 @@ class AbcLinkList {
   }
 
   virtual Node* Begin() final { return head_.next; }
-  virtual Node* End() = 0;
+  virtual Node* End() final { return end_; }
   virtual bool IsEmpty() final { return (Begin() == End()); }
 
   virtual unsigned Size() final {
@@ -77,8 +79,9 @@ class AbcLinkList {
 
   virtual void Clear() final {
     Node* cur = Begin();
+    Node* end = End();
     Node* temp = nullptr;
-    while (cur != nullptr || cur != &head_) {
+    while (cur != end) {
       temp = cur;
       cur = cur->next;
       delete temp;

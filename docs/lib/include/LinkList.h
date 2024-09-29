@@ -11,10 +11,9 @@ class LinkList : public AbcLinkList<T, LinkNode> {
   using Node = LinkNode<T>;
 
  public:
-  LinkList() = default;
-  LinkList(std::initializer_list<T> list) : ABC(list) {}
-  virtual Node* End() override { return nullptr; }
-  virtual ~LinkList() = default;
+  LinkList() : ABC(nullptr) {}
+  LinkList(std::initializer_list<T> list) : ABC(list, nullptr) {}
+  virtual ~LinkList() {}
 };
 
 #endif

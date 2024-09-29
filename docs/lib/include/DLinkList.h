@@ -11,9 +11,8 @@ class DLinkList : public AbcLinkList<T, DLinkNode> {
   using Node = DLinkNode<T>;
 
  public:
-  DLinkList() = default;
-  DLinkList(std::initializer_list<T> list) : ABC(list) {}
-  virtual Node* End() override { return nullptr; }
-  virtual ~DLinkList() = default;
+  DLinkList() : ABC(nullptr){};
+  DLinkList(std::initializer_list<T> list) : ABC(list, nullptr) {}
+  virtual ~DLinkList() {}
 };
 #endif

@@ -10,9 +10,8 @@ class CLinkList : public AbcLinkList<T, LinkNode> {
   using Node = LinkNode<T>;
 
  public:
-  CLinkList() = default;
-  CLinkList(std::initializer_list<T> list) : ABC(list) {}
-  virtual Node* End() override { return nullptr; }
+  CLinkList() : ABC(ABC::PrevNode(-1)){};
+  CLinkList(std::initializer_list<T> list) : ABC(list, ABC::PrevNode(-1)) {}
   virtual ~CLinkList() = default;
 };
 #endif

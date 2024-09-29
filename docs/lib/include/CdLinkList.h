@@ -10,9 +10,8 @@ class CdLinkList : public AbcLinkList<T, DLinkNode> {
   using Node = DLinkNode<T>;
 
  public:
-  CdLinkList() = default;
-  CdLinkList(std::initializer_list<T> list) : ABC(list) {}
-  virtual Node* End() override { return ABC::PreNode(-1); }
-  virtual ~CdLinkList() = default;
+  CdLinkList() : ABC(ABC::PrevNode(-1)){};
+  CdLinkList(std::initializer_list<T> list) : ABC(list, ABC::PrevNode(-1)) {}
+  virtual ~CdLinkList() {}
 };
 #endif
