@@ -599,24 +599,31 @@ void Insert(DCLinkNode* ha, DCLinkNode*& hb, int i) { // 不考虑删除头节�
     void SetDiff(LinkNode*& C, LinkNode* A, LinkNode* B) {
       auto c_rear = C;
       auto i_left = A;
+      LinkNode* temp;
       auto i = A->next;
       auto j = B->next;
       while (i && j) {
         if (i->data < j->data) {
+          c_rear->next = new LinkNode;
+          c_rear = c_rear->next;
+          c_rear->data = i->data;
           i = i->next;
           i_left = i_left->next;
         } else if (i->data > j->data) {
           j = j->next;
         } else {
-          c_rear->next = new LinkNode;
-          c_rear = c_rear->next;
-          c_rear->data = i->data;
           temp = i;
           i = i->next;
           i_left->next = i;
           delete temp;
           j = j->next;
         }
+      }
+      while (i) {
+          c_rear->next = new LinkNode;
+          c_rear = c_rear->next;
+          c_rear->data = i->data;
+          i = i->next;
       }
       c_rear->next = nullptr;
       auto b = B;

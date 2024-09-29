@@ -1,13 +1,17 @@
 #include <iostream>
 
-#include "../../docs/lib/include/dlinklist.h"
+#include "../../docs/lib/include/DLinkList.h"
 
 int main() {
-  dlinklist<int> h{'a', 'b', 'c', 'd', 'e'};
-  std::cout << h << "Size: " << h.size() << "\n"
-            << "Empty: " << h.empty() << "\n"
-            << "The third element: " << h[2] << "\n"
-            << "a index: " << h.index_find('a') << "\n"
-            << h.insert('f', 3) << "\n"
-            << h.erase(2) << "\n";
+  DLinkList<char> h{'a', 'b', 'c', 'd', 'e'};
+  std::cout << h << "\nSize: " << h.Size() << "\n"
+            << "Empty: " << h.IsEmpty() << "\n"
+            << "The third element: " << h.Begin()->next->next->data << "\n";
+  int a_index = 0;
+  for (auto cur = h.Begin(); cur->data != 'a' && cur != h.End();
+       cur = cur->next)
+    ++a_index;
+  std::cout << "a index: " << a_index << "\n"
+            << h.Insert('f', 3) << "\n"
+            << h.Erase(2) << "\n";
 }

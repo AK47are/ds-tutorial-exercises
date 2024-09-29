@@ -1,18 +1,20 @@
 #include <iostream>
 
-#include "../../docs/lib/include/linklist.h"
+#include "../../docs/lib/include/LinkList.h"
 
 int main() {
-  linklist<int> l{5, 1, 7, 2, 4, 6, 4, 2};
+  LinkList<int> l{5, 1, 7, 2, 4, 6, 4, 2};
   std::cout << l << "\n";
-  int k = 0, x = l[0];
-  for (int i = 0; i < l.size(); ++i)
-    if (l[i] < x) {
-      int temp = l[i];
-      l[i] = l[k];
-      l[k] = temp;
-      k++;
-      // std::cout << l << "\tk = " << k << '\n';
+  int x = l.Begin()->data;
+  auto k = l.Begin();
+  std::cout << x << "\n";
+  for (auto cur = l.Begin(); cur != l.End(); cur = cur->next)
+    if (cur->data < x) {
+      int temp = cur->data;
+      cur->data = k->data;
+      k->data = temp;
+      k = k->next;
+      std::cout << l << "\tk = " << k->data << '\n';
     }
   std::cout << l << "\n";
 }
