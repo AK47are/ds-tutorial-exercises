@@ -30,42 +30,48 @@ class AbcLinkList {
     head_.SetPrevNode(rear);
   }
 
+  AbcLinkList(ABC& l) : end_(l.end_) {
+    Node* cur = &head_;
+    for (auto i = l.Begin(); i != l.End(); i = i->next)
+      cur->next = new Node(cur, i->next, End());
+  }
+
   virtual Node* Begin() final { return head_.next; }
   virtual Node* End() final { return end_; }
-  virtual bool IsEmpty() final { return (Begin() == End()); }
+  virtual bool IsEmpty() { return (Begin() == End()); }
 
-  virtual unsigned Size() final {
+  virtual unsigned Size() {
     unsigned size = 0;
     for (Node* cur = Begin(); cur != End(); cur = cur->next) ++size;
     return size;
   }  // 返回遍历过的结点数量。
 
-  virtual Node* PrevNode(const unsigned index) final {  // index = pos - 1
-    if (index == 0 || index == -1) return &head_;
+  virtual Node* PrevNode(const unsigned index) final {
+    if (index == 0 || index == -1) return &head_;  // NOTE: 不包括头结点
     Node* cur = Begin();
     Node* end = End();
     for (int i = 1; i < index - 1 && cur != end; ++i) cur = cur->next;
     return cur;
   }
 
-  virtual Node* PrevNode(const Node* pos) final {
-    if (pos == Begin()) return &head_;
+  virtual Node* PrevNode(const Node* index) final {
+    if (index == Begin()) return &head_;
     Node* cur = Begin();
     Node* end = End();
-    while (cur->next != pos && cur != end) cur = cur->next;
+    while (cur->next != index && cur != end) cur = cur->next;
     return cur;
   }
 
   template <typename PosType>  // NOTE: 只能传整型或 Node* 型
-  ABC& Insert(const T data, PosType pos) {
-    Node* cur = PrevNode(pos);
+  ABC& Insert(const T data, PosType index) {
+    Node* cur = PrevNode(index);
     cur->next = new Node(cur, data, cur->next);
     return *this;
   }
 
   template <typename PosType>  // NOTE: 只能传整型或 Node* 型
-  ABC& Erase(PosType pos) {
-    Node* cur = PrevNode(pos);
+  ABC& Erase(PosType index) {
+    Node* cur = PrevNode(index);
     Node* temp = cur->SkipNext();
     delete temp;
     return *this;
@@ -77,7 +83,7 @@ class AbcLinkList {
     return os;
   }
 
-  virtual void Clear() final {
+  virtual void Clear() {
     Node* cur = Begin();
     Node* end = End();
     Node* temp = nullptr;

@@ -3,6 +3,9 @@ TARGETS = $(patsubst %.cpp, %.out, $(SOURCES))
 
 all: build/ $(TARGETS)
 
+build/:
+	mkdir build/
+
 %.out: %.cpp
 	g++ -o build/$@ $<
 

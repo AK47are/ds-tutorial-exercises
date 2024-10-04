@@ -1,20 +1,19 @@
 #include <iostream>
 
-#include "../../docs/lib/include/sqlist.h"
+#include "../../docs/lib/include/SqList.h"
 using namespace std;
 
 int main() {
-  sqlist<char, 10> L{'a', 'b', 'c', 'd', 'e'};
-  for (int i = 0; i < L.size(); ++i) cout << " " << L[i];
-  cout << "\n";
-  cout << "Length: " << L.size() << "\n";
-  cout << "Isempty: " << L.empty() << "\n";
-  cout << "The third element: " << L[2] << "\n";
-  cout << "a index is " << L.index_find('a') << "\n";
-  L.insert('f', 3);
-  for (int i = 0; i < L.size(); ++i) cout << " " << L[i];
-  cout << "\n";
-  L.erase(2);
-  for (int i = 0; i < L.size(); ++i) cout << " " << L[i];
-  cout << "\n";
+  SqList<char, 10> a{'a', 'b', 'c', 'd', 'e'};
+  cout << a << "\n";
+  cout << "Length: " << a.Size() << "\n";
+  cout << "Isempty: " << a.IsEmpty() << "\n";
+  cout << "The third element: " << a[2] << "\n";
+  int i = 0;
+  while (a[i] != 'a') ++i;
+  cout << "a index is " << i << "\n";
+  a.Insert('f', 3);
+  cout << a << "\n";
+  a.Erase(2);
+  cout << a << "\n";
 }
