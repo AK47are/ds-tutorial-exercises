@@ -11,6 +11,7 @@ class LinkStack : private LinkList<T> {
  public:
   LinkStack() = default;
   LinkStack(std::initializer_list<T> il) : List(il){};
+  LinkStack(LinkStack& s) = default;
   LinkStack& operator=(LinkStack& s) {
     Clear();
     Node* rear = List::PrevNode(-1);

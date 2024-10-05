@@ -13,6 +13,7 @@ class LinkList : public AbcLinkList<T, LinkNode> {
  public:
   LinkList() : ABC(nullptr) {}
   LinkList(std::initializer_list<T> list) : ABC(list, nullptr) {}
+  LinkList(LinkList& l) = default;
   virtual ~LinkList() {}
 };
 

@@ -32,8 +32,10 @@ class AbcLinkList {
 
   AbcLinkList(ABC& l) : end_(l.end_) {
     Node* cur = &head_;
-    for (auto i = l.Begin(); i != l.End(); i = i->next)
-      cur->next = new Node(cur, i->next, End());
+    for (auto i = l.Begin(); i != l.End(); i = i->next) {
+      cur->next = new Node(cur, i->data, End());
+      cur = cur->next;
+    }
   }
 
   virtual Node* Begin() final { return head_.next; }
