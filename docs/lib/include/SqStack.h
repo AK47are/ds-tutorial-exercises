@@ -19,7 +19,7 @@ class SqStack : public SqList<T, MAX> {
   SqStack() = default;
   SqStack(std::initializer_list<T> il) : List(il){};
 
-  SqStack& Push(const T data) {
+  SqStack& Push(T data) {
     operator[](List::length_) = data;
     ++List::length_;
     return *this;
@@ -30,7 +30,7 @@ class SqStack : public SqList<T, MAX> {
     return *this;
   }
 
-  T GetTop() { return operator[](List::Size - 1); }
+  T GetTop() { return operator[](List::Size() - 1); }
 
   friend std::ostream& operator<<(std::ostream& os, SqStack& s) {
     for (size_t i = 0; i < s.Size(); ++i) os << " " << s[s.Size() - 1 - i];
