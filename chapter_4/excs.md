@@ -94,7 +94,7 @@ int pattern_index(const char* match, const char* master) {
   while (i < size(match)) {
     if (j == -1 || match[j] == match[i] || match[j] == '?' || match[i] == '?') {
       ++i, ++j;
-      nextval[i] = (match[j] != match[i]) : j ? nextval[j];
+      nextval[i] = (match[j] != match[i]) ? j : nextval[j];
     } else {
       j = nextval[j];
     }

@@ -4,15 +4,14 @@
 #include <iostream>
 template <typename T, size_t MAX>
 class SqList {
- private:
-  T arr_[MAX];
-
  protected:
+  T* arr_;
   size_t length_;
 
  public:
-  SqList() : length_(0) {}
+  SqList() : length_(0) { arr_ = new T[MAX]; }
   SqList(std::initializer_list<T> il) {
+    arr_ = new T[MAX];
     int pos = 0;
     for (auto cur = il.begin(); cur != il.end(); ++cur) arr_[pos++] = *cur;
     length_ = pos;
@@ -44,6 +43,6 @@ class SqList {
 
   void Clear(const size_t pos = 0) { length_ = pos; }
 
-  ~SqList() = default;
+  ~SqList() { delete[] arr_; }
 };
 #endif
