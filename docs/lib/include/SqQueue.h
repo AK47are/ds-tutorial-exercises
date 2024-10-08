@@ -44,7 +44,9 @@ class SqQueue : public SqList<T, MAX> {
 
   friend std::ostream& operator<<(std::ostream& os, SqQueue& s) {
     std::cout << s[s.front - 1] << "\n";
-    for (size_t i = 0; i < s.Size(); ++i) os << " " << s[(s.front + i) % MAX];
+    for (size_t i = 0; i < s.Size(); ++i) {
+      os << " " << s[(s.front + i) % MAX];
+    }
     return os;
   }
   ~SqQueue() = default;

@@ -2,27 +2,34 @@
 #define DOCS_LIB_INCLUDE_SQSTRING_H_
 
 #include <cstring>
-#include <ostream>
 
 #include "SqList.h"
 
 template <size_t UNIT = 15>
 class SqString : public SqList<char, UNIT> {
  private:
-  size_t expand_frequency = 1;
+  size_t expand_frequency_ = 0;
 
  protected:
   bool IsFull() = delete;
 
-  void Expand() {
-    char* temp = this->arr_;
-    this->arr_ = new char[(++expand_frequency) * UNIT];
-    for (int i = 0; i < this->length_; ++i) this->arr_[i] = temp[i];
-    delete[] temp;
+  void AutoExpand() {  // 依靠 length_ 自动扩充
+    if (this->length_ >= expand_frequency_ * UNIT) {
+      char* temp;
+      while (this->length_ >= expand_frequency_ * UNIT) {
+        ++expand_frequency_;
+        temp = new char[(expand_frequency_ + 2) * UNIT];
+      }
+      for (int i = 0; i < this->length_; ++i) {
+        temp[i] = this->arr_[i];
+      }
+      delete[] this->arr_;
+      this->arr_ = temp;
+    }
   }
 
-  int* GetNextVal() {
-    int* nextval = new int[expand_frequency * UNIT];
+  int* GetNextval() const {  // NOTE:得到返回值用完记得 delete[]
+    int* nextval = new int[(expand_frequency_ + 1) * UNIT];
     nextval[0] = -1;
     int i = 0, j = -1;
     while (i < this->length_)
@@ -39,19 +46,18 @@ class SqString : public SqList<char, UNIT> {
   SqString() = default;
   SqString(const char* arr) {
     while (arr[this->length_] != '\0') ++this->length_;
-    while (this->length_ >= expand_frequency * UNIT) Expand();
+    AutoExpand();
     for (int i = 0; arr[i] != '\0'; ++i) this->arr_[i] = arr[i];
   }
-  SqString(SqString& str) : expand_frequency(str.expand_frequency - 1) {
-    Expand();
+  SqString(SqString& str) {
     this->length_ = str.length_;
-    for (int i = 0; i < str.length; ++i) this->arr_[i] = str[i];
+    AutoExpand();
+    for (int i = 0; i < str.length_; ++i) this->arr_[i] = str[i];
   }
 
-  char* ToCstr() const {
-    char* rtn;
-    strcpy(this->arr_, rtn);
-    return rtn;
+  const char* GetCstr() const {
+    this->arr_[this->length_] = '\0';
+    return this->arr_;
   }
 
   SqString GetSubStr(const size_t begin, const size_t end) const {
@@ -60,39 +66,72 @@ class SqString : public SqList<char, UNIT> {
     return rtn;
   }
 
-  SqString& Insert(const char data, const size_t index) override {
-    while (this->length_ >= expand_frequency * UNIT) Expand();
-    SqList<char, UNIT> Insert(data, index);
+  virtual SqString& Insert(const char data, const size_t index) override {
+    AutoExpand();
+    SqList<char, UNIT>::Insert(data, index);
     return *this;
   }
 
   SqString& Insert(SqString str, const size_t index) {
     if (index > this->length_) return *this;
     this->length_ += str.length_;
-    while (this->length_ >= expand_frequency * UNIT) Expand();
-    for (int i = this->length_ - 1; index + str.length_ - 1 < i; --i)
+    AutoExpand();
+    for (int i = this->length_ - 1; index + str.length_ - 1 < i; --i) {
       this->arr_[i] = this->arr_[i - str.length_];
-    for (int i = 0; i != str.length_; ++i) this->arr_[index + i] = str[i];
+    }
+    for (int i = 0; i != str.length_; ++i) {
+      this->arr_[index + i] = str[i];
+    }
     return *this;
   }
 
   SqString& Push(const char data) { return Insert(data, this->length_); }
+  SqString& Push(const SqString& str) { return Insert(str, this->length_); }
   SqString& Pop() { return Erase(this->length_ - 1); }
 
   SqString& Erase(const size_t begin, const size_t end) {
-    if (begin > end || begin >= this->length_ || begin >= 0) return *this;
-    for (int i = begin; i <= end; ++i) this->arr_[begin] = this->arr_[end + 1];
+    if (begin >= end || end > this->length_) return *this;
+    for (int i = 0; i < this->length_ - (end - 1); ++i) {
+      this->arr_[begin + i] = this->arr_[end + i];
+    }
     this->length_ -= (end - begin);
     return *this;
   }
 
-  SqString& operator=(const SqString& str) {
-    this->length_ = 0;
-    this->expand_frequency = str.expand_frequency - 1;
-    Expand();
-    for (int i = 0; i < str.length_; ++i) this->arr_[i] = str[i];
-    this->length_ = str.length_;
+  SqString& Replace(const SqString& str, const size_t index) {
+    for (int i = 0; index + i < this->length_ && i < str.Size(); ++i) {
+      this->arr_[index + i] = str[i];
+    }
     return *this;
+  }
+
+  long Find(const SqString& str) const {
+    int* nextval = str.GetNextval();
+    int i = 0, j = 0;
+    while (i < this->Size() && j != str.Size()) {
+      if (j == -1 || this->arr_[i] == str[j]) {
+        ++i, j++;
+      } else {
+        j = nextval[j];
+      }
+    }
+    delete[] nextval;
+    if (j == str.Size()) return i - j;
+    return -1;
+  }
+
+  SqString& operator=(const SqString& str) {
+    this->length_ = str.length_;
+    AutoExpand();
+    for (int i = 0; i < str.length_; ++i) {
+      this->arr_[i] = str[i];
+    }
+    return *this;
+  }
+
+  friend std::ostream& operator<<(std::ostream& os, const SqString& s) {
+    os << s.arr_;
+    return os;
   }
 
   bool operator==(const SqString& str) const {
@@ -110,10 +149,7 @@ class SqString : public SqList<char, UNIT> {
   bool operator>=(const SqString& str) const {
     return (*this == str || *this > str);
   }
-  friend std::ostream& operator<<(std::ostream& os, SqString& s) {
-    os << s.arr_;
-    return os;
-  }
+
   ~SqString() = default;
 };
 #endif

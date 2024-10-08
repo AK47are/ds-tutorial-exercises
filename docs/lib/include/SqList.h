@@ -1,3 +1,4 @@
+// TODO: 重新梳理 virtual，const，protected等标识符的使用。
 #ifndef DOCS_LIB_INCLUDE_SQLIST_H_
 #define DOCS_LIB_INCLUDE_SQLIST_H_
 #include <initializer_list>
@@ -13,7 +14,9 @@ class SqList {
   SqList(std::initializer_list<T> il) {
     arr_ = new T[MAX];
     int pos = 0;
-    for (auto cur = il.begin(); cur != il.end(); ++cur) arr_[pos++] = *cur;
+    for (auto cur = il.begin(); cur != il.end(); ++cur) {
+      arr_[pos++] = *cur;
+    }
     length_ = pos;
   }
 
@@ -21,23 +24,30 @@ class SqList {
   virtual bool IsFull() const final { return (length_ == MAX); }
   virtual size_t Size() const final { return length_; }
   virtual T& operator[](const size_t index) { return arr_[index]; }
+  virtual const T& operator[](const size_t index) const { return arr_[index]; }
 
-  SqList& Insert(const T x, const size_t index) {
+  virtual SqList& Insert(const T x, const size_t index) {
     if (index > length_) return *this;
-    for (int i = length_; i > index; --i) arr_[i] = arr_[i - 1];
+    for (int i = length_; i > index; --i) {
+      arr_[i] = arr_[i - 1];
+    }
     arr_[index] = x;
     ++length_;
     return *this;
   }
 
   SqList& Erase(const size_t index) {
-    for (int i = index; i < length_ - 1; ++i) arr_[i] = arr_[i + 1];
+    for (int i = index; i < length_ - 1; ++i) {
+      arr_[i] = arr_[i + 1];
+    }
     --length_;
     return *this;
   }
 
   friend std::ostream& operator<<(std::ostream& os, SqList& s) {
-    for (size_t i = 0; i < s.length_; ++i) os << " " << s.arr_[i];
+    for (size_t i = 0; i < s.length_; ++i) {
+      os << " " << s.arr_[i];
+    }
     return os;
   }
 

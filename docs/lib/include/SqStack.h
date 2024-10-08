@@ -33,7 +33,9 @@ class SqStack : public SqList<T, MAX> {
   T GetTop() { return operator[](List::Size() - 1); }
 
   friend std::ostream& operator<<(std::ostream& os, SqStack& s) {
-    for (size_t i = 0; i < s.Size(); ++i) os << " " << s[s.Size() - 1 - i];
+    for (size_t i = 0; i < s.Size(); ++i) {
+      os << " " << s[s.Size() - 1 - i];
+    }
     return os;
   }
   ~SqStack() = default;

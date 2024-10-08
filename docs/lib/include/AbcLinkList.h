@@ -44,7 +44,9 @@ class AbcLinkList {
 
   virtual unsigned Size() {
     unsigned size = 0;
-    for (Node* cur = Begin(); cur != End(); cur = cur->next) ++size;
+    for (Node* cur = Begin(); cur != End(); cur = cur->next) {
+      ++size;
+    }
     return size;
   }  // 返回遍历过的结点数量。
 
@@ -52,7 +54,9 @@ class AbcLinkList {
     if (index == 0 || index == -1) return &head_;  // NOTE: 不包括头结点
     Node* cur = Begin();
     Node* end = End();
-    for (int i = 1; i < index - 1 && cur != end; ++i) cur = cur->next;
+    for (int i = 1; i < index - 1 && cur != end; ++i) {
+      cur = cur->next;
+    }
     return cur;
   }
 
@@ -60,7 +64,9 @@ class AbcLinkList {
     if (index == Begin()) return &head_;
     Node* cur = Begin();
     Node* end = End();
-    while (cur->next != index && cur != end) cur = cur->next;
+    while (cur->next != index && cur != end) {
+      cur = cur->next;
+    }
     return cur;
   }
 
@@ -80,8 +86,9 @@ class AbcLinkList {
   }
 
   friend std::ostream& operator<<(std::ostream& os, AbcLinkList& s) {
-    for (Node* cur = s.Begin(); cur != s.End(); cur = cur->next)
+    for (Node* cur = s.Begin(); cur != s.End(); cur = cur->next) {
       os << " " << cur->data;
+    }
     return os;
   }
 

@@ -100,7 +100,7 @@ int pattern_index(const char* match, const char* master) {
     }
   }
   i = 0, j = 0;
-  while (i < size(master) - size(match) && j != size(match)) {
+  while (i < size(master) && j != size(match)) {
     if (j == -1 || match[j] == '?' || master[i] == match[j]) {
       ++i, j++;
     } else {
