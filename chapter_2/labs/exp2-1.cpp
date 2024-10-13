@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../../docs/lib/include/SqList.h"
+#include "../../docs/include/SqList.hpp"
 using namespace std;
 
 int main() {

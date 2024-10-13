@@ -1,7 +1,6 @@
 #ifndef DOCS_LIB_INCLUDE_LINKNODE_H_
 #define DOCS_LIB_INCLUDE_LINKNODE_H_
 
-#include <cmath>
 template <typename T, template <typename> class NodeType>
 struct AbcNode {
   T data;
@@ -27,7 +26,7 @@ struct LinkNode : AbcNode<T, LinkNode> {
   virtual LinkNode* CreateNext(const T& d) override {
     return this->next = new LinkNode{d, this->next};
   }
-  ~LinkNode() = default;
+  virtual ~LinkNode() = default;
 };
 
 template <typename T>
@@ -40,7 +39,7 @@ struct DLinkNode : AbcNode<T, DLinkNode> {
   virtual DLinkNode* CreateNext(const T& d) override {
     return this->next = new DLinkNode{this, d, this->next};
   }
-  ~DLinkNode() = default;
+  virtual ~DLinkNode() = default;
 };
 
 #endif

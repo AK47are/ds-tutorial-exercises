@@ -1,7 +1,7 @@
 #include <cctype>
 #include <iostream>
 
-#include "../../docs/lib/include/LinkList.h"
+#include "../../docs/include/LinkList.hpp"
 
 void Add(LinkNode<char>* a_cur, LinkNode<char>* b_cur, LinkList<char>& sum) {
   int carry = 0;

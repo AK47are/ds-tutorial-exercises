@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-#include "../../docs/lib/include/LinkList.h"
+#include "../../docs/include/LinkList.hpp"
 
 using namespace std;
 
@@ -21,15 +21,15 @@ struct Worker {
 
 void Sort(LinkList<Worker>& l,
           bool (*func)(LinkNode<Worker>* cur, LinkNode<Worker>* min)) {
-  LinkNode<Worker>* k = l.PrevNode(-1);
+  LinkNode<Worker>* k = l.GetHead();
   bool flag = 0;
   while (k->next != nullptr) {
     LinkNode<Worker>* min = k->next;
     for (LinkNode<Worker>* cur = k->next; cur != nullptr; cur = cur->next)
       min = (func(cur, min)) ? cur : min;
-    l.PrevNode(min)->next = min->next;
-    min->next = l.PrevNode(-1)->next;
-    l.PrevNode(-1)->next = min;
+    l.PrevNode(l.Begin(), min)->next = min->next;
+    min->next = l.GetHead()->next;
+    l.GetHead()->next = min;
     if (flag == 0) {
       k = min, flag = 1;
     }
@@ -41,7 +41,7 @@ int main() {
   ifstream fin("emp.dat");
   while (fin) {
     fin >> temp.no >> temp.name >> temp.depno >> temp.salary;
-    L.Insert(temp, L.End());
+    if (fin) L.Insert(temp, L.End());
   }
   cin >> temp.no >> temp.name >> temp.depno >> temp.salary;
   L.Insert(temp, L.End());

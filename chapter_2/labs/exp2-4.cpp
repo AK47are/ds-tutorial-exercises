@@ -1,17 +1,17 @@
 #include <iostream>
 
-#include "../../docs/lib/include/CLinkList.h"
+#include "../../docs/include/CLinkList.hpp"
 
 int main() {
-  CLinkList<int> h{'a', 'b', 'c', 'd', 'e'};
+  CLinkList<char> h{'a', 'b', 'c', 'd', 'e'};
   std::cout << h << "\nSize: " << h.Size() << "\n"
             << "Empty: " << h.IsEmpty() << "\n"
-            << "The third element: " << h.Begin()->next->next->data << "\n";
+            << "The third element: " << h.PrevNode(h.Begin(), 3)->data << "\n";
   int a_index = 0;
   for (auto cur = h.Begin(); cur->data != 'a' && cur != h.End();
        cur = cur->next)
     ++a_index;
   std::cout << "a index: " << a_index << "\n"
-            << h.Insert('f', 3) << "\n"
+            << h.Insert('K', 3) << "\n"
             << h.Erase(2) << "\n";
 }
