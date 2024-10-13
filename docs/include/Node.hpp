@@ -1,11 +1,14 @@
 #ifndef DOCS_LIB_INCLUDE_LINKNODE_H_
 #define DOCS_LIB_INCLUDE_LINKNODE_H_
 
+#include <cmath>
 template <typename T, template <typename> class NodeType>
 struct AbcNode {
   T data;
   NodeType<T>* next;
 
+  AbcNode() = default;
+  AbcNode(const T& d, NodeType<T>* n) : data(d), next(n) {}
   virtual NodeType<T>* SkipNext() final {  // 跳过下一个节点。
     if (next == nullptr) return nullptr;
     NodeType<T>* temp = next;
@@ -13,25 +16,31 @@ struct AbcNode {
     return temp;
   }
 
-  virtual NodeType<T>& CreateNode(const T& data) = 0;
+  virtual NodeType<T>* CreateNext(const T& d) = 0;
   virtual ~AbcNode() = default;
 };
 
 template <typename T>
 struct LinkNode : AbcNode<T, LinkNode> {
-  virtual LinkNode& CreateNode(const T& data) override {
-    this->next = new LinkNode{data, this->next};
-    return *this;
+  LinkNode() = default;
+  LinkNode(const T& d, LinkNode* n) : AbcNode<T, LinkNode>(d, n) {}
+  virtual LinkNode* CreateNext(const T& d) override {
+    return this->next = new LinkNode{d, this->next};
   }
+  ~LinkNode() = default;
 };
 
 template <typename T>
 struct DLinkNode : AbcNode<T, DLinkNode> {
   DLinkNode<T>* prev;
-  virtual DLinkNode& CreateNode(const T& data) override {
-    this->next = new DLinkNode{this, data, this->next};
-    return *this;
+
+  DLinkNode() = default;
+  DLinkNode(DLinkNode* p, const T& d, DLinkNode* n)
+      : AbcNode<T, DLinkNode>(d, n), prev(p) {}
+  virtual DLinkNode* CreateNext(const T& d) override {
+    return this->next = new DLinkNode{this, d, this->next};
   }
+  ~DLinkNode() = default;
 };
 
 #endif

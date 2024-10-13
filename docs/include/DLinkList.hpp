@@ -1,18 +1,9 @@
 #ifndef DOCS_LIB_INCLUDE_DLINKLIST_H_
 #define DOCS_LIB_INCLUDE_DLINKLIST_H_
-#include <initializer_list>
-#include <iostream>
 
-#include "AbcLinkList.h"
+#include "LinkList.hpp"
 
 template <typename T>
-class DLinkList : public AbcLinkList<T, DLinkNode> {
-  using ABC = AbcLinkList<T, DLinkNode>;
-  using Node = DLinkNode<T>;
+using DLinkList = LinkList<T, DLinkNode>;
 
- public:
-  DLinkList() : ABC(nullptr){};
-  DLinkList(std::initializer_list<T> list) : ABC(list, nullptr) {}
-  virtual ~DLinkList() {}
-};
 #endif
