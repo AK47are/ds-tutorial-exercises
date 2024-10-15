@@ -12,7 +12,7 @@ struct Worker {
   unsigned depno;
   unsigned salary;
 
-  friend ostream& operator<<(ostream& os, Worker& worker) {
+  friend ostream& operator<<(ostream& os, const Worker& worker) {
     os << worker.no << " " << worker.name << " " << worker.depno << " "
        << worker.salary << "\n";
     return os;

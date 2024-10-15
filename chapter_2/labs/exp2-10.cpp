@@ -18,7 +18,7 @@ struct Term {
   bool operator<=(Term& term) { return (exponent <= term.exponent); }
   bool operator>=(Term& term) { return (exponent >= term.exponent); }
   bool operator!=(Term& term) { return (exponent != term.exponent); }
-  friend std::ostream& operator<<(std::ostream& os, Term& term) {
+  friend std::ostream& operator<<(std::ostream& os, const Term& term) {
     if (term.coneffict >= 0) os << "+";
     os << term.coneffict << "x^" << term.exponent;
     return os;
