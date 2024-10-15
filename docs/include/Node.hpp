@@ -8,7 +8,7 @@ struct AbcNode {
 
   AbcNode() = default;
   AbcNode(const T& d, NodeType<T>* n) : data(d), next(n) {}
-  virtual NodeType<T>* SkipNext() final {  // 跳过下一个节点。
+  NodeType<T>* SkipNext() {  // 跳过下一个节点。
     if (next == nullptr) return nullptr;
     NodeType<T>* temp = next;
     next = temp->next;
@@ -23,7 +23,7 @@ template <typename T>
 struct LinkNode : AbcNode<T, LinkNode> {
   LinkNode() = default;
   LinkNode(const T& d, LinkNode* n) : AbcNode<T, LinkNode>(d, n) {}
-  virtual LinkNode* CreateNext(const T& d) override {
+  virtual LinkNode* CreateNext(const T& d) override final {
     return this->next = new LinkNode{d, this->next};
   }
   virtual ~LinkNode() = default;
@@ -36,7 +36,7 @@ struct DLinkNode : AbcNode<T, DLinkNode> {
   DLinkNode() = default;
   DLinkNode(DLinkNode* p, const T& d, DLinkNode* n)
       : AbcNode<T, DLinkNode>(d, n), prev(p) {}
-  virtual DLinkNode* CreateNext(const T& d) override {
+  virtual DLinkNode* CreateNext(const T& d) override final {
     return this->next = new DLinkNode{this, d, this->next};
   }
   virtual ~DLinkNode() = default;

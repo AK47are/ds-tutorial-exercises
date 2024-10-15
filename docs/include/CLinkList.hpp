@@ -15,20 +15,15 @@ class CLinkList : public AbcLinkList<T, NodeType> {
     this->GetHead()->next = End();
     this->Initialize(li);
   }
-  CLinkList(CLinkList& l) {
+  CLinkList(const CLinkList& l) {
     this->GetHead()->next = End();
     this->Initialize(l);
   }
-  virtual Node* End() override final { return this->GetHead(); }
-  virtual const Node* End() const override final { return this->GetHead(); };
 
-  virtual void Clear() override final {
-    Node* head = this->GetHead();
-    for (Node* temp = head->SkipNext(); temp != End(); temp = head->SkipNext())
-      delete temp;
-  }
+  Node* End() override { return this->GetHead(); }
+  const Node* End() const override { return this->GetHead(); };
 
-  virtual ~CLinkList() { Clear(); }
+  virtual ~CLinkList() { this->Clear(); }
 };
 
 #endif

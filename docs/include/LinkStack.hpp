@@ -1,41 +1,39 @@
 #ifndef DOCS_LIB_INCLUDE_LINKSTACK_H_
 #define DOCS_LIB_INCLUDE_LINKSTACK_H_
 
-#include "LinkList.h"
+#include "LinkList.hpp"
 
 template <typename T>
-class LinkStack : private LinkList<T> {
+class LinkStack : public LinkList<T> {
   using List = LinkList<T>;
   using Node = LinkNode<T>;
 
+ private:
+  // NOTE: 使用重载让类外无法使用函数。= delete 并不好用。
+  Node* End() override { return List::End(); }
+  void GetHead() {}
+  void PrevNode() {}
+  void Insert() {}
+  void Erase() {}
+
  public:
-  LinkStack() = default;
-  LinkStack(std::initializer_list<T> il) : List(il){};
-  LinkStack(LinkStack& s) = default;
-  LinkStack& operator=(LinkStack& s) {
-    Clear();
-    Node* rear = List::PrevNode(-1);
-    for (Node* cur = s.Begin(); cur != s.End(); cur = cur->next) {
-      rear->next = new Node(rear, cur->data, List::End());
-      rear = rear->next;
-    }
-    return *this;
-  }
-  virtual bool IsEmpty() { return List::IsEmpty(); }
-  virtual unsigned Size() { return List::Size(); }
+  using LinkList<T>::LinkList;
+  // using List::LinkList; clang++ 报错
+
+  const Node* End() const override { return List::End(); }
+  const Node* Begin() const { return List::Begin(); }
   LinkStack& Push(const T data) {
     List::Insert(data, List::Begin());
     return *this;
   }
+
   LinkStack& Pop() {
     List::Erase(List::Begin());
     return *this;
   }
-  T GetTop() { return List::Begin()->data; }
-  void Clear() { List::Clear(); }
-  friend std::ostream& operator<<(std::ostream& os, LinkStack& s) {
-    return os << static_cast<List&>(s);
-  }
-  ~LinkStack() = default;
+
+  const T& GetTop() const { return List::Begin()->data; }
+
+  virtual ~LinkStack() = default;
 };
 #endif

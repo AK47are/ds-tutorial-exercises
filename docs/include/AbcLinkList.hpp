@@ -13,14 +13,14 @@ class AbcLinkList {
   Node head_;
 
  protected:
-  virtual void Initialize(std::initializer_list<T> list) final {
+  void Initialize(std::initializer_list<T> list) {
     Node* rear = GetHead();
     for (auto cur = list.begin(); cur != list.end(); ++cur) {
       rear = rear->CreateNext(*cur);
     }
   }
 
-  virtual void Initialize(Abc& l) final {
+  void Initialize(const Abc& l) {
     Node* rear = &head_;
     for (auto cur = l.Begin(); cur != l.End(); cur = cur->next) {
       rear = rear->CreateNext(cur->data);
@@ -29,16 +29,23 @@ class AbcLinkList {
 
  public:
   AbcLinkList() = default;
+  AbcLinkList(AbcLinkList&&) = delete;
+  AbcLinkList& operator=(AbcLinkList&&) = delete;
+
+  AbcLinkList& operator=(const AbcLinkList& l) {
+    if (this != &l) Clear(), Initialize(l);
+    return *this;
+  }
 
   // NOTE: Begin 和 End 函数事关各函数的遍历。
-  virtual Node* Begin() final { return head_.next; }
-  virtual const Node* Begin() const final { return head_.next; }
+  Node* Begin() { return head_.next; }
+  const Node* Begin() const { return head_.next; }
   virtual Node* End() = 0;
   virtual const Node* End() const = 0;
 
-  virtual bool IsEmpty() const { return (Begin() == End()); }
+  bool IsEmpty() const { return (Begin() == End()); }
 
-  virtual unsigned Size() const {
+  unsigned Size() const {
     unsigned size = 0;
     for (const Node* cur = Begin(); cur != End(); cur = cur->next) {
       ++size;
@@ -46,17 +53,17 @@ class AbcLinkList {
     return size;
   }  // 返回遍历过的结点数量。
 
-  virtual Node* GetHead() { return &head_; }
-  virtual const Node* GetHead() const { return &head_; }
+  Node* GetHead() { return &head_; }
+  const Node* GetHead() const { return &head_; }
 
-  virtual Node* PrevNode(Node* start, const unsigned offset) final {
+  Node* PrevNode(Node* start, const unsigned offset) {
     if (start == Begin() && offset == 0) return GetHead();
     if (offset == 0) return nullptr;
     if (offset == 1 || start == End() || start->next == End()) return start;
     return PrevNode(start->next, offset - 1);
   }
 
-  virtual Node* PrevNode(Node* start, const Node* pos) final {
+  Node* PrevNode(Node* start, const Node* pos) {
     if (start == Begin() && start == pos) return GetHead();
     if (start == pos) return nullptr;
     if (start == End() || start->next == End() || start->next == pos)
@@ -79,14 +86,18 @@ class AbcLinkList {
     return *this;
   }
 
-  friend std::ostream& operator<<(std::ostream& os, AbcLinkList& s) {
-    for (Node* cur = s.Begin(); cur != s.End(); cur = cur->next) {
+  friend std::ostream& operator<<(std::ostream& os, const AbcLinkList& s) {
+    for (const Node* cur = s.Begin(); cur != s.End(); cur = cur->next) {
       os << cur->data;
     }
     return os;
   }
 
-  virtual void Clear() = 0;
+  void Clear() {
+    Node* head = this->GetHead();
+    for (Node* temp = head->SkipNext(); temp != End(); temp = head->SkipNext())
+      delete temp;
+  }
 
   virtual ~AbcLinkList() = default;
 };

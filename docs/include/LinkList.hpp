@@ -15,20 +15,14 @@ class LinkList : public AbcLinkList<T, NodeType> {
     this->GetHead()->next = End();
     this->Initialize(li);
   }
-  LinkList(LinkList& l) {
+  LinkList(const LinkList& l) {
     this->GetHead()->next = End();
     this->Initialize(l);
   }
-  virtual Node* End() override final { return nullptr; }
-  virtual const Node* End() const override final { return nullptr; };
+  Node* End() override { return nullptr; }
+  const Node* End() const override { return nullptr; };
 
-  virtual void Clear() override final {
-    Node* head = this->GetHead();
-    for (Node* temp = head->SkipNext(); temp != End(); temp = head->SkipNext())
-      delete temp;
-  }
-
-  virtual ~LinkList() { Clear(); }
+  virtual ~LinkList() { this->Clear(); }
 };
 
 #endif

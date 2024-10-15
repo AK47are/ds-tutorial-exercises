@@ -1,35 +1,42 @@
 #ifndef DOCS_LIB_INCLUDE_LINKQUEUE_H_
 #define DOCS_LIB_INCLUDE_LINKQUEUE_H_
 
-#include "LinkList.h"
+#include "LinkList.hpp"
 
 template <typename T>
-class LinkQueue : private LinkList<T> {
+class LinkQueue : public LinkList<T> {
   using List = LinkList<T>;
   using Node = LinkNode<T>;
 
  private:
   Node* rear;
 
- public:
-  LinkQueue() : List(), rear(List::PrevNode(-1)){};
+  Node* End() override { return List::End(); }
+  const Node* End() const override { return List::End(); }
+  void Begin() {}
+  void GetHead() {}
+  void PrevNode() {}
+  void Insert() {}
+  void Erase() {}
 
+ public:
+  LinkQueue() : List(), rear(List::GetHead()){};
   LinkQueue(std::initializer_list<T> il)
-      : List(il), rear(List::PrevNode(List::End())){};
-  virtual bool IsEmpty() { return List::IsEmpty(); }
-  virtual unsigned Size() { return List::Size(); }
+      : List(il), rear(List::PrevNode(List::Begin(), List::End())){};
+
   LinkQueue& EnQueue(const T data) {
-    rear->next = new Node(rear, data, nullptr);
-    rear = rear->next;
+    rear = rear->CreateNext(data);
     return *this;
   }
-  LinkQueue& DeQueue() { return static_cast<LinkQueue&>(List::Erase(-1)); }
-  T GetFront() { return List::Begin()->data; }
-  T GetRear() { return rear->data; }
-  void Clear() { List::Clear(); }
-  friend std::ostream& operator<<(std::ostream& os, LinkQueue& s) {
-    return os << static_cast<List&>(s);
+
+  LinkQueue& DeQueue() {
+    List::Erase(0);
+    return *this;
   }
-  ~LinkQueue() = default;
+
+  const T& GetFront() const { return List::Begin()->data; }
+  const T& GetRear() const { return rear->data; }
+
+  virtual ~LinkQueue() = default;
 };
 #endif

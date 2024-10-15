@@ -1,12 +1,13 @@
-// TODO: 重新梳理 virtual，const，protected等标识符的使用。
 #ifndef DOCS_LIB_INCLUDE_SQLIST_H_
 #define DOCS_LIB_INCLUDE_SQLIST_H_
 #include <initializer_list>
 #include <iostream>
 template <typename T, size_t MAX>
 class SqList {
- protected:
+ private:
   T* arr_;
+
+ protected:
   size_t length_;
 
  public:
@@ -20,13 +21,13 @@ class SqList {
     length_ = pos;
   }
 
-  virtual bool IsEmpty() const final { return (length_ == 0); }
-  virtual bool IsFull() const final { return (length_ == MAX); }
-  virtual size_t Size() const final { return length_; }
-  virtual T& operator[](const size_t index) { return arr_[index]; }
-  virtual const T& operator[](const size_t index) const { return arr_[index]; }
+  bool IsEmpty() const { return (length_ == 0); }
+  bool IsFull() const { return (length_ == MAX); }
+  size_t Size() const { return length_; }
+  T& operator[](const size_t index) { return arr_[index]; }
+  const T& operator[](const size_t index) const { return arr_[index]; }
 
-  virtual SqList& Insert(const T x, const size_t index) {
+  SqList& Insert(const T x, const size_t index) {
     if (index > length_) return *this;
     for (int i = length_; i > index; --i) {
       arr_[i] = arr_[i - 1];
@@ -44,9 +45,9 @@ class SqList {
     return *this;
   }
 
-  friend std::ostream& operator<<(std::ostream& os, SqList& s) {
+  friend std::ostream& operator<<(std::ostream& os, const SqList& s) {
     for (size_t i = 0; i < s.length_; ++i) {
-      os << " " << s.arr_[i];
+      os << s.arr_[i];
     }
     return os;
   }
