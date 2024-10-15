@@ -11,10 +11,10 @@ class LinkStack : public LinkList<T> {
  private:
   // NOTE: 使用重载让类外无法使用函数。= delete 并不好用。
   Node* End() override { return List::End(); }
-  void GetHead() {}
-  void PrevNode() {}
-  void Insert() {}
-  void Erase() {}
+  using List::Erase;
+  using List::GetHead;
+  using List::Insert;
+  using List::PrevNode;
 
  public:
   using LinkList<T>::LinkList;

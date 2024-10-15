@@ -6,9 +6,13 @@ template <typename T, size_t MAX>
 class SqList {
  private:
   T* arr_;
+  size_t length_;
 
  protected:
-  size_t length_;
+  T*& GetArr() { return arr_; }
+  const T* GetArr() const { return arr_; }
+  size_t& GetLength() { return length_; }
+  const size_t& GetLength() const { return length_; }
 
  public:
   SqList() : length_(0) { arr_ = new T[MAX]; }

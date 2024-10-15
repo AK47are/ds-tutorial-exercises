@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../../docs/lib/include/SqString.h"
+#include "../../docs/include/SqString.hpp"
 
 int main() {
   using namespace std;

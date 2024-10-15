@@ -13,11 +13,11 @@ class LinkQueue : public LinkList<T> {
 
   Node* End() override { return List::End(); }
   const Node* End() const override { return List::End(); }
-  void Begin() {}
-  void GetHead() {}
-  void PrevNode() {}
-  void Insert() {}
-  void Erase() {}
+  using List::Begin;
+  using List::Erase;
+  using List::GetHead;
+  using List::Insert;
+  using List::PrevNode;
 
  public:
   LinkQueue() : List(), rear(List::GetHead()){};

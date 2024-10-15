@@ -28,14 +28,14 @@ class SqQueue : public SqList<T, MAX> {
     if (!List::IsFull()) {
       rear = (rear + 1) % MAX;
       List::operator[](rear) = data;
-      ++this->length_;
+      ++this->GetLength();
     }
     return *this;
   }
   SqQueue& DeQueue() {
     if (!List::IsEmpty()) {
       front = (front + 1) % MAX;
-      --this->length_;
+      --this->GetLength();
     }
     return *this;
   }
