@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-#include "../../docs/lib/include/LinkStack.h"
+#include "../../docs/include/LinkStack.hpp"
 
 using namespace std;
 void Dispose(string&);

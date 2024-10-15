@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-#include "../../docs/lib/include/LinkQueue.h"
+#include "../../docs/include/LinkQueue.hpp"
 using namespace std;
 
 class Nurse;

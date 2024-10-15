@@ -1,4 +1,4 @@
-#include "../../docs/lib/include/SqStack.h"
+#include "../../docs/include/SqStack.hpp"
 
 using namespace std;
 int main() {

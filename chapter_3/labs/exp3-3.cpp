@@ -1,4 +1,4 @@
-#include "../../docs/lib/include/SqQueue.h"
+#include "../../docs/include/SqQueue.hpp"
 
 using namespace std;
 int main() {

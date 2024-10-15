@@ -1,4 +1,4 @@
-#include "../../docs/lib/include/LinkStack.h"
+#include "../../docs/include/LinkStack.hpp"
 
 using namespace std;
 int main() {

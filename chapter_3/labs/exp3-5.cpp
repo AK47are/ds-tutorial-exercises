@@ -1,7 +1,7 @@
 // TODO: 自动生成迷宫，图形化迷宫界面
 #include <iostream>
 
-#include "../../docs/lib/include/LinkStack.h"
+#include "../../docs/include/LinkStack.hpp"
 
 using namespace std;
 
@@ -19,8 +19,8 @@ struct Cursor {
   void MoveRight() { ++y, di = 0; }
   void MoveUp() { --x, di = 0; }
   void MoveDown() { ++x, di = 0; }
-  friend ostream& operator<<(ostream& os, Cursor& cur) {
-    os << "<- (" << cur.x << ", " << cur.y << ", " << cur.di << ")";
+  friend ostream& operator<<(ostream& os, const Cursor& cur) {
+    os << " <- (" << cur.x << ", " << cur.y << ", " << cur.di << ")";
     return os;
   }
 };
@@ -54,7 +54,7 @@ int main() {
                        {1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
                        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
   Maze<Height, Width> mg{a, {1, 1, 0}, {Height - 2, Width - 2, 0}};
-  cout << mg[Cursor{13, 13}] << "\n";
+  // cout << mg[Cursor{5, 10}] << "\n";
   LinkStack<Cursor> path[MAX];
   for (int i = 0; i < MAX; ++i) path[i].Push(Cursor{0, 0, 4});
   Cursor cur = mg.entrance_;
@@ -63,6 +63,7 @@ int main() {
     mg[cur] = -1;
     // cout << cur << path[i] << "\n";
     if (cur == mg.exit_) {
+      cout << "OK\n";
       path[i + 1] = path[i];
       path[i].Push(cur);
       mg[cur] = 0;

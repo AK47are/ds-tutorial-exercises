@@ -2,14 +2,14 @@
 #include <iostream>
 #include <ostream>
 
-#include "../../docs/lib/include/LinkQueue.h"
-#include "../../docs/lib/include/SqStack.h"
+#include "../../docs/include/LinkQueue.hpp"
+#include "../../docs/include/SqStack.hpp"
 
 class ParkingLot;
 struct Car {
   size_t license;
   size_t parking_time = 0;
-  bool IsQuit() {
+  bool IsQuit() const {
     if (rand() % 20 < 1)
       return true;
     else
@@ -17,10 +17,10 @@ struct Car {
   }
   bool Waiting(ParkingLot& pl);
   bool Parking(ParkingLot& pl);
-  size_t GiveFee() { return 5 * parking_time; };
+  size_t GiveFee() const { return 5 * parking_time; };
   void Reset() { parking_time = 0; }
-  Car& operator=(Car&) = default;
-  friend std::ostream& operator<<(std::ostream& os, Car car) {
+  Car& operator=(const Car&) = default;
+  friend std::ostream& operator<<(std::ostream& os, const Car& car) {
     std::cout << "(" << car.license << ", " << car.parking_time << ")";
     return os;
   }

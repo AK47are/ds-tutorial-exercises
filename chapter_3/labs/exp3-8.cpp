@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-#include "../../docs/lib/include/LinkStack.h"
+#include "../../docs/include/LinkStack.hpp"
 using namespace std;
 struct Coord {
   unsigned x;
@@ -11,8 +11,8 @@ struct Coord {
     os << "(" << coord.x << ", " << coord.y << ") <-";
     return os;
   }
-  unsigned LeftDiagonal() { return y - x; }
-  unsigned RightDiagonal() { return y + x; }
+  unsigned LeftDiagonal() const { return y - x; }
+  unsigned RightDiagonal() const { return y + x; }
 };
 
 bool IsAttack(LinkStack<Coord> left, Coord right) {
