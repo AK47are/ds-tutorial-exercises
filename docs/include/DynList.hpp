@@ -10,18 +10,19 @@ class DynList : public SqList<T, UNIT> {
  private:
   size_t expand_frequency_ = 0;
 
+  using List::Erase;
   using List::GetLength;
-
- protected:
+  using List::Insert;
   bool IsFull() = delete;
 
+ protected:
   void AutoExpand() {  // 依靠 length_ 自动扩充
-    if (this->GetLength() >= expand_frequency_ * UNIT) {
+    if (this->GetLength() >= Capacity()) {
       T* temp;
-      while (this->GetLength() >= expand_frequency_ * UNIT) {
+      while (this->GetLength() >= Capacity()) {
         ++expand_frequency_;
-        temp = new char[(expand_frequency_ + 2) * UNIT];
       }
+      temp = new char[Capacity()];
       for (int i = 0; i < this->GetLength(); ++i) {
         temp[i] = this->GetArr()[i];
       }
@@ -36,19 +37,15 @@ class DynList : public SqList<T, UNIT> {
   }
 
  public:
+  using List::SqList;
   const size_t Capacity() const { return (expand_frequency_ + 1) * UNIT; }
 
-  DynList& Insert(const T x, const size_t index) {
+  void Insert(const T x, const size_t index) {
     List::Insert(x, index);
     AutoExpand();
-    return *this;
   }
 
-  DynList& Erase(const size_t index) {
-    List::Erase(index);
-    return *this;
-  }
-
+  void Erase(const size_t index) { List::Erase(index); }
   ~DynList() = default;
 };
 

@@ -9,12 +9,17 @@ int main() {
   cout << s << "\n"
        << "Length: " << s.Size() << "\n";
   SqString s2 = s;
-  cout << s2.Insert(s1, 9) << "\n";
+  s2.Insert(s1, 9);
+  cout << s2 << "\n";
   s2 = s;
-  cout << s2.Erase(1, 6) << "\n";
+  s2.Erase(1, 6);
+  cout << s2 << "\n";
   s2 = s;
-  cout << s2.Replace(s1, 1) << "\n"
-       << s.GetSubStr(2, 10) << "\n"
-       << s1.Insert(s2, s1.Size()) << "\n";
+  s2.Replace(s1, 1);
+  cout << s2 << "\n";
+  s.GetSubStr(2, 10);
+  cout << s << "\n";
+  s1.Insert(s2, s1.Size());
+  cout << s1 << "\n";
   cout << s2.Find("lmn") << "\n";
 }

@@ -7,33 +7,21 @@ class SqStack : public SqList<T, MAX> {
   using List = SqList<T, MAX>;
 
  private:
-  SqStack& Insert(const T data, const size_t index) {
-    List::Insert(data, index);
-    return *this;
-  }
-
-  SqStack& Erase(const size_t index) {
-    List::Erase(index);
-    return *this;
-  }
-
-  const T& operator[](const size_t index) const {
-    return List::operator[](index);
-  }
+  using List::Erase;
+  using List::Insert;
+  using List::operator[];
 
  public:
   using List::SqList;
-  SqStack& Push(T data) { return Insert(data, this->Size()); }
-  SqStack& Pop() { return Erase(this->Size() - 1); }
-  const T& GetTop() const { return this->operator[](List::Size() - 1); }
-
-  friend std::ostream& operator<<(std::ostream& os, const SqStack& s) {
-    for (size_t i = 0; i < s.Size(); ++i) {
-      os << s[s.Size() - 1 - i];
-    }
-    return os;
+  SqStack& Push(T data) {
+    Insert(data, this->Size());
+    return *this;
   }
-
+  SqStack& Pop() {
+    Erase(this->Size() - 1);
+    return *this;
+  }
+  const T& GetTop() const { return this->operator[](List::Size() - 1); }
   ~SqStack() = default;
 };
 #endif

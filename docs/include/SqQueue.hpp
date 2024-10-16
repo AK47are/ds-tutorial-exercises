@@ -10,20 +10,18 @@ class SqQueue : public SqList<T, MAX> {
   size_t front;
   size_t rear;
 
-  const T& operator[](const size_t index) const {
-    return List::operator[](index);
-  }
-  SqQueue& Insert(const T data, const size_t index) = delete;
-  SqQueue& Erase(const size_t index) = delete;
-  void Clear(const size_t pos = 0) = delete;
+  using List::operator[];
+  using List::Clear;
+  using List::Erase;
+  using List::Insert;
 
  public:
-  SqQueue() : List(), front(0), rear(-1){};
+  SqQueue() : List(), front(0), rear(-1) {}
   SqQueue(std::initializer_list<T> il)
-      : List(il), front(0), rear(il.Size() - 1){};
+      : List(il), front(0), rear(il.Size() - 1) {}
 
-  const T& GetFront() const { return List::operator[](front); }
-  const T& GetRear() const { return List::operator[](rear); }
+  const T& GetFront() const { return this->operator[](front); }
+  const T& GetRear() const { return this->operator[](rear); }
   SqQueue& EnQueue(const T data) {
     if (!List::IsFull()) {
       rear = (rear + 1) % MAX;

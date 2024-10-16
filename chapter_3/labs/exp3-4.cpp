@@ -4,10 +4,15 @@ using namespace std;
 int main() {
   LinkQueue<char> s;
   cout << s.IsEmpty() << "\n";
-  s.EnQueue('a').EnQueue('b').EnQueue('c');
+  char arr[10]{"abcdef"};
+  for (int i = 0; i < 3; ++i) {
+    s.EnQueue(arr[i]);
+  }
   cout << s.GetFront() << "\n";
   s.DeQueue();
-  s.EnQueue('d').EnQueue('e').EnQueue('f');
+  for (int i = 3; i < 6; ++i) {
+    s.EnQueue(arr[i]);
+  }
   cout << s << "\n";
   cout << "Size: " << s.Size() << "\n";
 }

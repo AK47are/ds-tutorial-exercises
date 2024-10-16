@@ -31,25 +31,24 @@ class SqList {
   T& operator[](const size_t index) { return arr_[index]; }
   const T& operator[](const size_t index) const { return arr_[index]; }
 
-  SqList& Insert(const T x, const size_t index) {
-    if (index > length_) return *this;
+  void Insert(const T x, const size_t index) {
+    if (index > length_) return;  // *this;
     for (int i = length_; i > index; --i) {
       arr_[i] = arr_[i - 1];
     }
     arr_[index] = x;
     ++length_;
-    return *this;
   }
 
-  SqList& Erase(const size_t index) {
+  void Erase(const size_t index) {
     for (int i = index; i < length_ - 1; ++i) {
       arr_[i] = arr_[i + 1];
     }
     --length_;
-    return *this;
+    // return *this;
   }
 
-  friend std::ostream& operator<<(std::ostream& os, const SqList& s) {
+  friend std::ostream& operator<<(std::ostream& os, SqList& s) {
     for (size_t i = 0; i < s.length_; ++i) {
       os << s.arr_[i];
     }

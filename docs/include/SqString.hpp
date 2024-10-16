@@ -45,13 +45,10 @@ class SqString : public DynList<char, UNIT> {
     return rtn;
   }
 
-  SqString& Insert(const char data, const size_t index) {
-    SqList<char, UNIT>::Insert(data, index);
-    return *this;
-  }
+  using DynList<char, UNIT>::Insert;
 
-  SqString& Insert(SqString str, const size_t index) {
-    if (index > this->Size()) return *this;
+  void Insert(SqString str, const size_t index) {
+    if (index > this->Size()) return;  // *this;
     this->SetLength(this->Size() + str.Size());
     for (int i = this->Size() - 1; index + str.Size() - 1 < i; --i) {
       this->GetArr()[i] = this->GetArr()[i - str.Size()];
@@ -59,27 +56,33 @@ class SqString : public DynList<char, UNIT> {
     for (int i = 0; i != str.Size(); ++i) {
       this->GetArr()[index + i] = str[i];
     }
+    // return *this;
+  }
+
+  SqString& Push(const char data) {
+    Insert(data, this->Size());
+    return *this;
+  }
+  SqString& Pop() {
+    Erase(this->Size() - 1);
     return *this;
   }
 
-  SqString& Push(const char data) { return Insert(data, this->Size()); }
-  SqString& Push(const SqString& str) { return Insert(str, this->Size()); }
-  SqString& Pop() { return Erase(this->Size() - 1); }
-
-  SqString& Erase(const size_t begin, const size_t end) {
-    if (begin >= end || end > this->Size()) return *this;
+  using DynList<char, UNIT>::Erase;
+  void Erase(const size_t begin, const size_t end) {
+    if (begin >= end || end > this->Size()) return;  // *this;
     for (int i = 0; i < this->Size() - (end - 1); ++i) {
       this->GetArr()[begin + i] = this->GetArr()[end + i];
     }
     this->SetLength(this->Size() - (end - begin));
-    return *this;
+    // return *this;
   }
 
-  SqString& Replace(const SqString& str, const size_t index) {
+  void Replace(const SqString& str, const size_t index) {
     for (int i = 0; index + i < this->Size() && i < str.Size(); ++i) {
       this->GetArr()[index + i] = str[i];
     }
-    return *this;
+    // return *this;
   }
 
   long Find(const SqString& str) const {

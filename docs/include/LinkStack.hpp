@@ -11,6 +11,7 @@ class LinkStack : public LinkList<T> {
  private:
   // NOTE: 使用重载让类外无法使用函数。= delete 并不好用。
   Node* End() override { return List::End(); }
+  using List::Begin;
   using List::Erase;
   using List::GetHead;
   using List::Insert;
@@ -19,21 +20,11 @@ class LinkStack : public LinkList<T> {
  public:
   using LinkList<T>::LinkList;
   // using List::LinkList; clang++ 报错
-
   const Node* End() const override { return List::End(); }
   const Node* Begin() const { return List::Begin(); }
-  LinkStack& Push(const T data) {
-    List::Insert(data, List::Begin());
-    return *this;
-  }
-
-  LinkStack& Pop() {
-    List::Erase(List::Begin());
-    return *this;
-  }
-
+  Node* Push(const T data) { return List::Insert(data, List::Begin()); }
+  Node* Pop() { return List::Erase(List::Begin()); }
   const T& GetTop() const { return List::Begin()->data; }
-
   virtual ~LinkStack() = default;
 };
 #endif

@@ -72,18 +72,16 @@ class AbcLinkList {
   }
 
   template <typename PosType>  // NOTE: 只能传整型或 Node* 型
-  Abc& Insert(const T data, PosType pos) {
+  Node* Insert(const T data, PosType pos) {
     Node* cur = PrevNode(Begin(), pos);
-    cur->CreateNext(data);
-    return *this;
+    return cur->CreateNext(data);
   }
 
   template <typename PosType>  // NOTE: 只能传整型或 Node* 型
-  Abc& Erase(PosType pos) {
+  Node* Erase(PosType pos) {
     Node* cur = PrevNode(Begin(), pos);
-    Node* temp = cur->SkipNext();
-    delete temp;
-    return *this;
+    delete cur->SkipNext();
+    return cur->next;
   }
 
   friend std::ostream& operator<<(std::ostream& os, const AbcLinkList& s) {

@@ -24,15 +24,9 @@ class LinkQueue : public LinkList<T> {
   LinkQueue(std::initializer_list<T> il)
       : List(il), rear(List::PrevNode(List::Begin(), List::End())){};
 
-  LinkQueue& EnQueue(const T data) {
-    rear = rear->CreateNext(data);
-    return *this;
-  }
+  Node* EnQueue(const T data) { return rear = rear->CreateNext(data); }
 
-  LinkQueue& DeQueue() {
-    List::Erase(0);
-    return *this;
-  }
+  Node* DeQueue() { return List::Erase(0); }
 
   const T& GetFront() const { return List::Begin()->data; }
   const T& GetRear() const { return rear->data; }
