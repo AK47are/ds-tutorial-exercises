@@ -1,14 +1,14 @@
 #include <iostream>
 
-#include "../../docs/include/SqString.hpp"
+#include "../../docs/include/LinkString.hpp"
 
 int main() {
   using namespace std;
-  SqString s{"abcdefghijklmn"};
-  SqString s1{"xyz"};
+  LinkString s{"abcdefghijklmn"};
+  LinkString s1{"xyz"};
   cout << s << "\n"
        << "Length: " << s.Size() << "\n";
-  SqString s2 = s;
+  LinkString s2 = s;
   s2.Insert(s1, 8);
   cout << s2 << "\n";
   s2 = s;
