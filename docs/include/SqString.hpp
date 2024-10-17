@@ -5,8 +5,7 @@
 
 #include "DynList.hpp"
 
-template <size_t UNIT = 15>
-class SqString : public DynList<char, UNIT> {
+class SqString : public DynList<char, 15> {
  protected:
   int* GetNextval() const {  // NOTE:得到返回值用完记得 delete[]
     int* nextval = new int[this->Capacity()];
@@ -29,23 +28,26 @@ class SqString : public DynList<char, UNIT> {
     while (arr[length] != '\0') this->SetLength(++length);
     for (int i = 0; arr[i] != '\0'; ++i) this->GetArr()[i] = arr[i];
   }
-  SqString(SqString& str) {
+  SqString(const SqString& str) {
     this->SetLength(str.Size());
     for (int i = 0; i < str.Size(); ++i) this->GetArr()[i] = str[i];
   }
 
-  const char* GetCstr() const {
+  const char* GetCstr() {
     this->GetArr()[this->Size()] = '\0';
     return this->GetArr();
   }
 
   SqString GetSubStr(const size_t begin, const size_t end) const {
     SqString rtn;
-    for (int i = 0; i < end - begin; ++i) rtn[i] = this->GetArr()[begin + i];
+    rtn.SetLength(end - begin);
+    for (int i = 0; i < end - begin; ++i) {
+      rtn.GetArr()[i] = this->GetArr()[begin + i];
+    }
     return rtn;
   }
 
-  using DynList<char, UNIT>::Insert;
+  using DynList<char, 15>::Insert;
 
   void Insert(SqString str, const size_t index) {
     if (index > this->Size()) return;  // *this;
@@ -68,7 +70,7 @@ class SqString : public DynList<char, UNIT> {
     return *this;
   }
 
-  using DynList<char, UNIT>::Erase;
+  using DynList<char, 15>::Erase;
   void Erase(const size_t begin, const size_t end) {
     if (begin >= end || end > this->Size()) return;  // *this;
     for (int i = 0; i < this->Size() - (end - 1); ++i) {
@@ -85,19 +87,20 @@ class SqString : public DynList<char, UNIT> {
     // return *this;
   }
 
-  long Find(const SqString& str) const {
+  // 查找第 num 个 str 子串下标。
+  long Find(const SqString& str, const size_t num = 1) const {
     int* nextval = str.GetNextval();
-    int i = 0, j = 0;
-    while (i < this->Size() && j != str.Size()) {
+    int i = 0, j = 0, n = 0, index = -1;
+    while (i < this->Size() && n < num) {
       if (j == -1 || this->GetArr()[i] == str[j]) {
         ++i, j++;
       } else {
         j = nextval[j];
       }
+      if (j == str.Size()) index = i - j, ++n, j = 0;
     }
     delete[] nextval;
-    if (j == str.Size()) return i - j;
-    return -1;
+    return index;
   }
 
   SqString& operator=(const SqString& str) {

@@ -16,6 +16,15 @@ class SqList {
 
  public:
   SqList() : length_(0) { arr_ = new T[MAX]; }
+
+  SqList(const SqList& list) {
+    arr_ = new T[MAX];
+    length_ = list.Size();
+    for (int i = 0; i != length_; ++i) {
+      arr_[i] = list.arr_[i];
+    }
+  }
+
   SqList(std::initializer_list<T> il) {
     arr_ = new T[MAX];
     int pos = 0;
@@ -48,7 +57,7 @@ class SqList {
     // return *this;
   }
 
-  friend std::ostream& operator<<(std::ostream& os, SqList& s) {
+  friend std::ostream& operator<<(std::ostream& os, const SqList& s) {
     for (size_t i = 0; i < s.length_; ++i) {
       os << s.arr_[i];
     }
