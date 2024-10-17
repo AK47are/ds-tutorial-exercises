@@ -97,7 +97,7 @@ class SqString : public DynList<char, 15> {
       } else {
         j = nextval[j];
       }
-      if (j == str.Size()) index = i - j, ++n, j = 0;
+      if (j == str.Size()) index = i - j, ++n, j = 0, i = index + 1;
     }
     delete[] nextval;
     return index;
