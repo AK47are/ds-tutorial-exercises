@@ -151,12 +151,12 @@ void del(Node* L, const T& data) {
     delete L;
     return;
   }
-  del(L->next, const T& data);
+  del(L->next, data);
 }
 
 void delall(Node* L, const T& data) {
   if (L == nullptr) return;
-  del(L->next, const T& data);
+  delall(L->next, data);
   if (L->data == data) {
     delete L;
     return;
@@ -194,5 +194,19 @@ T minnode(const Node* L) {
 #### 答案：
 ```cpp
 int find(const SqString& s, const SqString& t) {
+  for (int i = 0; i < s.Size(); ++i) {
+    for (int j = 0; j < t.Size(); ++j) {
+      if (t[j] == '*') {
+        int k = find(s.GetSubStr(i + j + 1, s.Size()), t.GetSubStr(j + 1, t.Size()));
+        if (k != -1)
+          return i - 1;
+        else
+          return -1;
+      }
+      if (s[i + j] != t[j]) break;
+    }
+      if (j == t.Size()) return i;
+  }
+  return -1;
 }
 ```
