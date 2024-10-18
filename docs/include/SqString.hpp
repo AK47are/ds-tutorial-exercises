@@ -65,10 +65,7 @@ class SqString : public DynList<char, 15> {
     Insert(data, this->Size());
     return *this;
   }
-  SqString& Pop() {
-    Erase(this->Size() - 1);
-    return *this;
-  }
+  char Pop() { return Erase(this->Size() - 1); }
 
   using DynList<char, 15>::Erase;
   void Erase(const size_t begin, const size_t end) {

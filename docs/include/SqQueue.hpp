@@ -31,11 +31,13 @@ class SqQueue : public SqList<T, MAX> {
     return *this;
   }
   SqQueue& DeQueue() {
+    T rtn;
     if (!List::IsEmpty()) {
+      rtn = operator[](front);
       front = (front + 1) % MAX;
       --this->GetLength();
     }
-    return *this;
+    return rtn;
   }
 
   friend std::ostream& operator<<(std::ostream& os, const SqQueue& s) {

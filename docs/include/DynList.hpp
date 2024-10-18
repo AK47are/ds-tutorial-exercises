@@ -45,7 +45,7 @@ class DynList : public SqList<T, UNIT> {
     AutoExpand();
   }
 
-  void Erase(const size_t index) { List::Erase(index); }
+  T Erase(const size_t index) { return List::Erase(index); }
   ~DynList() = default;
 };
 
