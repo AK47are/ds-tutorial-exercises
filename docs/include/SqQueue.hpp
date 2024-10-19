@@ -10,6 +10,7 @@ class SqQueue : public SqList<T, MAX> {
   size_t front;
   size_t rear;
 
+  SqQueue& operator=(const SqQueue&) = delete;
   using List::operator[];
   using List::Clear;
   using List::Erase;

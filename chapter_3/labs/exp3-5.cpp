@@ -63,7 +63,6 @@ int main() {
     mg[cur] = -1;
     // cout << cur << path[i] << "\n";
     if (cur == mg.exit_) {
-      cout << "OK\n";
       path[i + 1] = path[i];
       path[i].Push(cur);
       mg[cur] = 0;

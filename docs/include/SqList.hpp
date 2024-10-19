@@ -34,6 +34,17 @@ class SqList {
     length_ = pos;
   }
 
+  SqList& operator=(const SqList& l) {
+    if (this != &l) {
+      Clear();
+      for (int i = 0; i < l.Size(); ++i) {
+        arr_[i] = l.GetArr()[i];
+      }
+      length_ = l.length_;
+    }
+    return *this;
+  }
+
   bool IsEmpty() const { return (length_ == 0); }
   bool IsFull() const { return (length_ == MAX); }
   size_t Size() const { return length_; }

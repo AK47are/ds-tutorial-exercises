@@ -1,13 +1,12 @@
 // NOTE:解决问题必须可以遍历全部元素，实际上栈并太适合解决这个问题。
 #include <iostream>
-#include <string>
 
 #include "../../docs/include/LinkStack.hpp"
 using namespace std;
 struct Coord {
   unsigned x;
   unsigned y;
-  friend ostream& operator<<(ostream& os, Coord& coord) {
+  friend ostream& operator<<(ostream& os, const Coord& coord) {
     os << "(" << coord.x << ", " << coord.y << ") <-";
     return os;
   }
@@ -32,7 +31,6 @@ int main() {
   cout << "输入皇后个数：";
   cin >> n;
   LinkStack<Coord> sol{Coord{0, n}};
-  string status;
   Coord temp{0, 0};
   while (!sol.IsEmpty()) {
     if (sol.Size() == n + 1) {

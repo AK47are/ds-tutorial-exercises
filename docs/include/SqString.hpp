@@ -94,9 +94,12 @@ class SqString : public DynList<char, 15> {
       } else {
         j = nextval[j];
       }
-      if (j == str.Size()) index = i - j, ++n, j = 0, i = index + 1;
+      if (j == str.Size()) {
+        index = i - j, ++n, j = 0, i = index + 1;
+      }
     }
     delete[] nextval;
+    if (n != num) return -1;
     return index;
   }
 
