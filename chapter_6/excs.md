@@ -77,7 +77,7 @@ $Max(m, n) + 1 + k$
 
 #### 答案：
 ```cpp
-void Find(int B[][], int x, int i, int j) {
+void Find(int B[m][n], int x, int i, int j) {
     if (B[i][j] == x) 
       cout << "B[" << i << "][" << j << "] == " << x "\n";
     else if (B[i][j] < x)

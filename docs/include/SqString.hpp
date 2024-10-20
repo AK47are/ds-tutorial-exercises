@@ -61,6 +61,11 @@ class SqString : public DynList<char, 15> {
     // return *this;
   }
 
+  SqString& Push(const SqString& str) {
+    Insert(str, this->Size());
+    return *this;
+  }
+
   SqString& Push(const char data) {
     Insert(data, this->Size());
     return *this;
@@ -101,6 +106,12 @@ class SqString : public DynList<char, 15> {
     delete[] nextval;
     if (n != num) return -1;
     return index;
+  }
+
+  SqString operator+(const SqString& str) {
+    SqString rtn = *this;
+    rtn.Push(str);
+    return rtn;
   }
 
   SqString& operator=(const SqString& str) {
