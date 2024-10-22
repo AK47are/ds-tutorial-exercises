@@ -29,9 +29,9 @@
 $$
 n = n_1 + n_2 + n_3 + n_4 + n_0 \\
 r = n_1 + 2 * n_2 + 3 * n_3 + 4 * n_4 \\
-n = r - 1 \\
+r = n - 1 \\
 $$
-可得：$n_0 = 12$
+可得：$n_0 = 14$
 
 ---
 
@@ -88,32 +88,33 @@ $$
         i -->|right| v5[nullptr];
     ```
 
-2. 先序序列：$abdfhgijce$ <br>
-   中序序列：$hfdjigbeca$ <br>
-   后序序列：$hfjigdecba$
+2. 先序序列：$abcedfhgij$ <br>
+   中序序列：$ecbhfdjiga$ <br>
+   后序序列：$echfjigdba$
 
-3. 后序线索树：
-    ```mermaid
-    graph TD;
-        %% Binary Tree Structure
-        a --> b;
-        b --> c;
-        b --> d;
-        d --> f;
-        d --> g;
-        f --> h;
-        c --> e;
-        g --> i;
-        i --> j;
+3. 后序线索树：（图不好画）
+    ```dot
+    digraph BinaryTree {
+        node [shape=circle]; // 设置节点为圆形
 
-        %% Threads (dashed lines)
-        h -.-> f;
-        f -.-> d;
-        j -.-> i;
-        i -.-> g;
-        g -.-> d;
-        e -.-> c;
-        c -.-> b;
+        a -> b [label="left"];
+        b -> c [label="left"];
+        b -> d [label="right"];
+        d -> f [label="left"];
+        d -> g [label="right"];
+        f -> h [label="left"];
+        c -> e [label="left"];
+        g -> i [label="left"];
+        i -> j [label="left"];
+
+        e -> c [style=dashed]; 
+        c -> h [style=dashed]; 
+        h -> f [style=dashed]; 
+        f -> j [style=dashed]; 
+        j -> i [style=dashed]; 
+        i -> g [style=dashed]; 
+        g -> d [style=dashed]; 
+    }
     ```
 
 ---
@@ -122,7 +123,7 @@ $$
 含有 60 个叶子结点的二叉树的最小高度是多少？
 
 #### 答案：
-$\lceil log_{2}(60) \rceil + 1$
+$\lceil log_{2}(60) \rceil + 1 = 7$
 
 ---
 
@@ -138,7 +139,7 @@ $\lceil log_{2}(60) \rceil + 1$
 已知一棵满二叉树的结点个数为 20 ~ 40 ，此二叉树的叶子结点有多少个？
 
 #### 答案：
-5
+16
 
 ---
 
@@ -184,4 +185,234 @@ f = 01
 
 ---
 
-###
+### Q10:
+假设有 9 个结点，编号为 1 ~ 9 ，初始并查集为 $S$ = {{1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}} ，给出在 $S$ 上执行以下一系列并查集运算的过程和结果：
+$Union(1,2)$, $Union(3, 4)$, $Union(5, 6)$, $Union(7, 8)$, $Union(2, 4)$, $Union(8, 9)$, $Union(6, 8)$, $Find(5)$, $Union(4, 8)$, $Find(1)$ 。在合并中两个子集树秩相同时以编号较大的结果作为根结点。
+
+#### 答案：
+```
+S = {{1, 2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}}
+S = {{1, 2}, {3, 4}, {5}, {6}, {7}, {8}, {9}}
+S = {{1, 2}, {3, 4}, {5, 6}, {7}, {8}, {9}}
+S = {{1, 2}, {3, 4}, {5, 6}, {7, 8}, {9}}
+S = {{1, 2, 3, 4}, {5, 6}, {7, 8}, {9}}
+S = {{1, 2, 3, 4}, {5, 6}, {7, 8, 9}}
+S = {{1, 2, 3, 4}, {5, 6, 7, 8, 9}}
+Find(5) = 5
+S = {{1, 2, 3, 4, 5, 6, 7, 8, 9}}
+Find(1) = 1
+```
+
+---
+
+
+### Q11:
+假设二叉树中的每个结点值为单个字符，设计一个算法，将一棵以二叉链方式存储的二叉树 $t$ 转换成对应的顺序存储结构 $a$ 。
+
+#### 答案：
+```cpp
+int Transform(const Btree& t, int arr[]) {
+  int length = 0;
+  SqQueue<BtNode*> temp;
+  BtNode* cur = t.GetRoot();
+  while (cur != nullptr) {
+    arr[length++] =  cur->data;
+    while (arr[length] != '#']) ++length;
+    if (cur->lchild != nullptr)
+      temp.EnQueue(cur->lchild);
+    else
+      arr[length * 2 - 1] = '#';
+    if (cur->rchild != nullptr)
+      temp.EnQueue(cur->rchild);
+    else
+      arr[length * 2] = '#';
+    cur = (t.Size() != 0) ? temp.DeQueue() : nullptr;
+  }
+  return length;
+}
+```
+
+---
+
+### Q12:
+假设二叉树中的每个结点值为单个字符，采用顺序存储结构存储。设计一个算法，求二叉树 $t$ 中的叶子结点个数。
+
+#### 答案：
+```cpp
+int LeaveCount(BTree& t) {
+  int count = 0;
+  for (int i = 0; i < t.Size(); ++i) {
+    if (t[i] != '#' && 2 * root + 1 >= t.Size()
+      || (t[2 * root + 1] == '#' && t[2 * root + 2] == '#')) 
+        ++count;
+  }
+  return count;
+}
+```
+
+---
+
+### Q13:
+假设二叉树中的每个结点为单个字符，采用二叉链存储结构存储。设计一个算法，计算一棵给定二叉树 $b$ 中的所有单分支结点个数。
+
+#### 答案：
+```cpp
+void SingleNodeCount(BtNode* root, int& count = 0) {
+  if (root->lchild ^ root->rchild) ++count;
+  if (root->lchild) SingleNodeCount(root->lchild, count);
+  if (root->rchild) SingleNodeCount(root->rchild, count);
+}
+```
+
+---
+
+### Q14:
+假设二叉树中的每个结点值为单个字符，采用二叉链存储结构。设计一个算法，求二叉树 $b$ 中的最小结点值。
+
+#### 答案：
+```cpp
+void Min(BtNode* root, char& min = 0) {
+  min = (min < root->data) ? min : root->data;
+  if (root->lchild) Min(root->lchild, min);
+  if (root->rchild) Min(root->rchild, min);
+}
+```
+
+---
+
+### Q15:
+假设二叉树中的每个结点值为单个字符，采用二叉链存储结构存储。设计一个算法，将二叉链 $b1$ 复制到二叉链 $b2$ 中。
+
+#### 答案：
+```cpp
+void Copy(const BtNode* b1_root, const BtNode* b2_root) {
+  b2_root->data = b1_root->data;
+  b2_root->lchild = nullptr, b2_root->rchild = nullptr;
+  if (root->lchild) {
+    b2_root->lchild = new BtNode;
+    Copy(root->lchild, b2_root->lchild);
+  }
+  if (root->rchild) {
+    b2_root->rchild = new BtNode;
+    Copy(root->rchild, b2_root->rchild);
+  }
+}
+```
+
+---
+
+### Q16:
+假设二叉树中的每个结点值为单个字符，采用二叉链存储结构存储。设计一个算法，求二叉树 $b$ 中第 $k$ 层上的叶子结点个数。
+
+#### 答案：
+```cpp
+int CountKthLevelLeaves(const BtNode* root, const unsigned k) {
+  if (k == 1) {
+    if (!root->lchild && !root->rchild) 
+      return 1;
+    return 0;
+  }
+  int sum = 0;
+  if (root->lchild) sum += CountKthLevelLeaves(root->lchild, k - 1);
+  if (root->rchild) sum += CountKthLevelLeaves(root->rchild, k - 1);
+  return sum;
+}
+```
+
+### Q17:
+假设二叉树中的每个结点值为单个字符，采用二叉链存储结构存储。设计一个算法，判断值为 $x$ 的结点与值为 $y$ 的结点是否互为兄弟，假设这样的结点值是唯一的。
+
+#### 答案：
+```cpp
+bool IsBrother(const BtNode* t, const char& x, const char& y) {
+  if (root->lchild && root->rchild && (root->lchild->data == x || root->lchild->data == y)) {
+    compare_brother = [x, y](BtNode* left, BtNode* right) { return left->data == x && right->data == y; };
+    return compare_brother(root->lchild, root->rchild) || compare_brother(root->rchild, root->lchild);
+  }
+  bool is_brother = 0;
+  if (root->lchild) is_brother |= IsBrother(root->lchild, x, y);
+  if (root->rchild) is_brother |= IsBrother(root->rchild, x, y);
+  return is_brother;
+}
+```
+
+### Q18:
+假设二叉树中的每个结点值为单个字符，采用二叉链存储结构存储。设计一个算法，采用先序遍历方法求二叉树 $b$ 中值为 $x$ 的结点的子孙结点，假设值为 $x$ 的结点是唯一的。
+
+#### 答案：
+```cpp
+void Output(const BtNode* root) {
+  if (!root) return;
+  cout << root->data;
+  Output(root->lchild);
+  Output(root->rchild);
+}
+
+void Find(const BtNode* root, const char& x) {
+  if (!root) return;
+  if (root->data == x) Output(root);
+  Find(root->lchild, x);
+  Find(root->rchild, x);
+}
+```
+
+---
+
+### Q19:
+假设二叉树采用二叉链存储结构，设计一个算法把二叉树 $b$ 的左右子树进行交换，要求不破坏原二叉树。
+
+#### 答案：
+```cpp
+void Swap(const BtNode* b_root, BtNode* t_root) {
+  t_root->lchild = nullptr, t_root->rchild = nullptr;
+  t_root->data = b_root->data;
+  if (root->lchild) {
+    b2_root->rchild = new BtNode;
+    Swap(root->lchild, b2_root->rchild);
+  }
+  if (root->rchild) {
+    b2_root->lchild = new BtNode;
+    Swap(root->rchild, b2_root->lchild);
+  }
+}
+```
+
+---
+
+### Q20:
+假设二叉树采用二叉链存储结构，设计一个算法判断一棵二叉树 $b$ 的左、右子树是否同构。
+
+#### 答案：
+```cpp
+bool IsIsomorphic(BtNode* b1, BtNode* b2) {
+  if (!b1 && !b2)
+    return true;
+  else if (!b1 || !b2)
+    return false;
+  return IsIsomorphic(b1->lchild, b1->rchild) & IsIsomorphic(b2->lchild, b2->rchild);
+}
+
+bool IsIsomorphic(BtNode* b) {
+  if (!b) return true;
+  return IsIsomorphic(b->lchild, b->rchild);
+}
+```
+
+---
+
+### Q21:
+假设二叉树以二叉链存储，设计一个算法判断一棵二叉树 $b$ 是否为完全二叉树。
+
+#### 答案：
+```cpp
+bool IsComplete(const Btree& b) {
+  int* arr = new BtNode*[pow(2, b.Depth())];
+  int length = Transform(b.GetRoot(), arr);
+  for (int i = 0; i < length - pow(2, b.Depth() - 1); ++i) {
+    if (arr[i] == '#') return false;
+  }
+  return true;
+}
+```
+
+---
