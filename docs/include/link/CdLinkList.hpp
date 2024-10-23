@@ -1,5 +1,5 @@
-#ifndef DOCS_LIB_INCLUDE_CDLINKLIST_H_
-#define DOCS_LIB_INCLUDE_CDLINKLIST_H_
+#ifndef CDLINKLIST_HPP_
+#define CDLINKLIST_HPP_
 
 #include "CLinkList.hpp"
 

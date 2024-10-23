@@ -1,5 +1,5 @@
-#ifndef DOCS_LIB_INCLUDE_DLINKLIST_H_
-#define DOCS_LIB_INCLUDE_DLINKLIST_H_
+#ifndef DLINKLIST_HPP_
+#define DLINKLIST_HPP_
 
 #include "LinkList.hpp"
 

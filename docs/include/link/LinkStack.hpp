@@ -1,5 +1,5 @@
-#ifndef DOCS_LIB_INCLUDE_LINKSTACK_H_
-#define DOCS_LIB_INCLUDE_LINKSTACK_H_
+#ifndef LINKSTACK_HPP_
+#define LINKSTACK_HPP_
 
 #include "LinkList.hpp"
 

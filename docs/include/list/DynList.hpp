@@ -1,5 +1,5 @@
-#ifndef DOCS_LIB_INCLUDE_DYNLIST_H_
-#define DOCS_LIB_INCLUDE_DYNLIST_H_
+#ifndef DYNLIST_HPP_
+#define DYNLIST_HPP_
 
 #include "SqList.hpp"
 

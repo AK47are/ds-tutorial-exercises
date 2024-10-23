@@ -1,5 +1,5 @@
-#ifndef DOCS_LIB_INCLUDE_SQLIST_H_
-#define DOCS_LIB_INCLUDE_SQLIST_H_
+#ifndef SQLIST_HPP_
+#define SQLIST_HPP_
 #include <initializer_list>
 #include <iostream>
 template <typename T, size_t MAX>

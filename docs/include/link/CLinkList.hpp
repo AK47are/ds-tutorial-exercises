@@ -1,5 +1,5 @@
-#ifndef DOCS_LIB_INCLUDE_CLINKLIST_H_
-#define DOCS_LIB_INCLUDE_CLINKLIST_H_
+#ifndef CLINKLIST_HPP_
+#define CLINKLIST_HPP_
 
 #include "AbcLinkList.hpp"
 #include "Node.hpp"

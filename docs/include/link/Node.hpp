@@ -1,5 +1,5 @@
-#ifndef DOCS_LIB_INCLUDE_LINKNODE_H_
-#define DOCS_LIB_INCLUDE_LINKNODE_H_
+#ifndef LINKNODE_HPP_
+#define LINKNODE_HPP_
 
 template <typename T, template <typename> class NodeType>
 struct AbcLinkNode {

@@ -1,5 +1,5 @@
-#ifndef DOCS_LIB_INCLUDE_SQSTRING_H_
-#define DOCS_LIB_INCLUDE_SQSTRING_H_
+#ifndef SQSTRING_HPP_
+#define SQSTRING_HPP_
 
 #include <cstring>
 

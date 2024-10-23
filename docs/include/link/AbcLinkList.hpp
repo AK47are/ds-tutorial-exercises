@@ -1,5 +1,5 @@
-#ifndef DOCS_LIB_INCLUDE_ABCLINKLIST_H_
-#define DOCS_LIB_INCLUDE_ABCLINKLIST_H_
+#ifndef ABCLINKLIST_HPP_
+#define ABCLINKLIST_HPP_
 
 #include <iostream>
 

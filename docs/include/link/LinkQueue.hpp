@@ -1,5 +1,5 @@
-#ifndef DOCS_LIB_INCLUDE_LINKQUEUE_H_
-#define DOCS_LIB_INCLUDE_LINKQUEUE_H_
+#ifndef LINKQUEUE_HPP_
+#define LINKQUEUE_HPP_
 
 #include "LinkList.hpp"
 

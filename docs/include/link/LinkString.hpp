@@ -1,6 +1,6 @@
 // 不推荐使用。
-#ifndef DOCS_LIB_INCLUDE_LINKSTRING_H_
-#define DOCS_LIB_INCLUDE_LINKSTRING_H_
+#ifndef LINKSTRING_HPP_
+#define LINKSTRING_HPP_
 
 #include "LinkList.hpp"
 class LinkString : public LinkList<char> {

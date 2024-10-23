@@ -1,5 +1,5 @@
-#ifndef DOCS_LIB_INCLUDE_SQSTACK_H_
-#define DOCS_LIB_INCLUDE_SQSTACK_H_
+#ifndef SQSTACK_HPP_
+#define SQSTACK_HPP_
 
 #include "SqList.hpp"
 template <typename T, size_t MAX>

@@ -1,5 +1,5 @@
-#ifndef DOCS_LIB_INCLUDE_SQEUEUE_H_
-#define DOCS_LIB_INCLUDE_SQEUEUE_H_
+#ifndef SQQUEUE_HPP_
+#define SQQUEUE_HPP_
 
 #include "SqList.hpp"
 template <typename T, size_t MAX>
