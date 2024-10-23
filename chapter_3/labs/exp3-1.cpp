@@ -1,4 +1,4 @@
-#include "../../docs/include/SqStack.hpp"
+#include "dependence.h"
 
 using namespace std;
 int main() {

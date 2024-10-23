@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../../docs/include/SqList.hpp"
+#include "dependence.h"
 using namespace std;
 
 int main() {

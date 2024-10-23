@@ -1,7 +1,8 @@
 // NOTE:解决问题必须可以遍历全部元素，实际上栈并太适合解决这个问题。
 #include <iostream>
 
-#include "../../docs/include/LinkStack.hpp"
+#include "dependence.h"
+
 using namespace std;
 struct Coord {
   unsigned x;

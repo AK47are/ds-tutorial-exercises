@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../../docs/include/SqStack.hpp"
+#include "dependency.h"
 using namespace std;
 
 const unsigned MAX_ITEM = 6;

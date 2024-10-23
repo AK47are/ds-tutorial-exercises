@@ -1,7 +1,7 @@
 #include <iostream>
 #include <ostream>
 
-#include "../../docs/include/SqList.hpp"
+#include "dependency.h"
 struct TupNode {
   size_t row;
   size_t col;

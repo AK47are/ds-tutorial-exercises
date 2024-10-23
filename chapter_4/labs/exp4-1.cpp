@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../../docs/include/SqString.hpp"
+#include "dependence.h"
 
 int main() {
   using namespace std;

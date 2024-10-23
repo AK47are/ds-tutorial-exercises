@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../../docs/include/SqString.hpp"
+#include "dependence.h"
 int* GetNextval(const SqString& s) {
   int* nextval = new int[s.Size()];
   nextval[0] = -1;

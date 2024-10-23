@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../../docs/include/SqString.hpp"
+#include "dependence.h"
 
 int Find(const SqString& s, const SqString& t) {
   int num = 0;

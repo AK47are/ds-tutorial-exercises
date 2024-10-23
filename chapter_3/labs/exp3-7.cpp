@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../../docs/include/LinkStack.hpp"
+#include "dependence.h"
 using namespace std;
 
 int main() {

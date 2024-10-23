@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../../docs/include/LinkList.hpp"
+#include "dependency.h"
 using namespace std;
 
 LinkNode<char>* Reverse(LinkList<char>& s, LinkNode<char>* cur) {

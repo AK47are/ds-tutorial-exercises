@@ -1,8 +1,7 @@
 // TODO: 自动生成迷宫，图形化迷宫界面
 #include <iostream>
 
-#include "../../docs/include/LinkStack.hpp"
-
+#include "dependence.h"
 using namespace std;
 
 struct Cursor {

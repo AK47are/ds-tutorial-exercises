@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../../docs/include/DLinkList.hpp"
+#include "dependence.h"
 
 int main() {
   DLinkList<char> h{'a', 'b', 'c', 'd', 'e'};

@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../../docs/include/LinkList.hpp"
+#include "dependence.h"
 
 int main() {
   LinkList<char> h{'a', 'b', 'c', 'd', 'e'};

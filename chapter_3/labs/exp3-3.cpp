@@ -1,4 +1,4 @@
-#include "../../docs/include/SqQueue.hpp"
+#include "dependence.h"
 
 using namespace std;
 int main() {

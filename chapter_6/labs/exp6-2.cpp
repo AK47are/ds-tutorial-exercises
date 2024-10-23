@@ -1,7 +1,7 @@
 #include <iostream>
 #include <ostream>
 
-#include "../../docs/include/LinkList.hpp"
+#include "dependency.h"
 
 class GLinkList;
 using DataType = char;

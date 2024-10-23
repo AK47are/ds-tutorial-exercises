@@ -2,8 +2,7 @@
 #include <iostream>
 #include <ostream>
 
-#include "../../docs/include/LinkQueue.hpp"
-#include "../../docs/include/SqStack.hpp"
+#include "dependence.h"
 
 class ParkingLot;
 struct Car {

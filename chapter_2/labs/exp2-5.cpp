@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../../docs/include/CdLinkList.hpp"
+#include "dependence.h"
 
 int main() {
   CDLinkList<char> h{'a', 'b', 'c', 'd', 'e'};

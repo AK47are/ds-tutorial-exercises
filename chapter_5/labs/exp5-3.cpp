@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../../docs/include/SqString.hpp"
+#include "dependency.h"
 
 using namespace std;
 void Find(SqString str, int begin) {

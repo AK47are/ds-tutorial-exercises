@@ -1,4 +1,4 @@
-#include "../../docs/include/SqList.hpp"
+#include "dependency.h"
 
 template <int MAX>
 class SMatrix : public SqList<int, MAX*(MAX + 1) / 2> {

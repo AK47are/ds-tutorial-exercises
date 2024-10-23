@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../../docs/include/LinkList.hpp"
+#include "dependency.h"
 using namespace std;
 
 LinkNode<char>* GetRNode(LinkNode<char>* cur, int k, int& i) {

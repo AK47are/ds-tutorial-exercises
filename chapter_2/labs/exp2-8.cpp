@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../../docs/include/LinkList.hpp"
+#include "dependence.h"
 
 template <typename T>
 void UnionSet(LinkNode<T>* A, LinkNode<T>* B, LinkNode<T>* C) {

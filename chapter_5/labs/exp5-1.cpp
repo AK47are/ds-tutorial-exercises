@@ -1,7 +1,7 @@
 #include <cmath>
 #include <iostream>
 
-#include "../../docs/include/SqStack.hpp"
+#include "dependency.h"
 const int MAX = 50;
 struct Post {
   char name;

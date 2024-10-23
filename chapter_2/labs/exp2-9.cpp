@@ -1,7 +1,7 @@
 #include <iostream>
 #include <ostream>
 
-#include "../../docs/include/LinkList.hpp"
+#include "dependence.h"
 struct Term {
   double coneffict;
   int exponent;

@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../../docs/include/LinkList.hpp"
+#include "dependence.h"
 
 template <typename T>
 void merge(LinkList<T>& ha, LinkList<T>& hb, LinkList<T>& hc) {

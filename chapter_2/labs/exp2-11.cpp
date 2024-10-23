@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-#include "../../docs/include/LinkList.hpp"
+#include "dependence.h"
 
 using namespace std;
 

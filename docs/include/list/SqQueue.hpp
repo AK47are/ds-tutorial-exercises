@@ -31,7 +31,7 @@ class SqQueue : public SqList<T, MAX> {
     }
     return *this;
   }
-  SqQueue& DeQueue() {
+  T DeQueue() {
     T rtn;
     if (!List::IsEmpty()) {
       rtn = operator[](front);

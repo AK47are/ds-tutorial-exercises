@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../../docs/include/CLinkList.hpp"
+#include "dependence.h"
 
 int main() {
   CLinkList<char> h{'a', 'b', 'c', 'd', 'e'};

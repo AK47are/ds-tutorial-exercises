@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-#include "../../docs/include/LinkQueue.hpp"
+#include "dependence.h"
 using namespace std;
 
 class Nurse;
