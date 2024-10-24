@@ -213,11 +213,11 @@ Find(1) = 1
 ```cpp
 int Transform(const Btree& t, int arr[]) {
   int length = 0;
-  SqQueue<BtNode*> temp;
+  LinkQueue<BtNode*> temp;
   BtNode* cur = t.GetRoot();
   while (cur != nullptr) {
     arr[length++] =  cur->data;
-    while (arr[length] != '#']) ++length;
+    while (arr[length] != '#') ++length;
     if (cur->lchild != nullptr)
       temp.EnQueue(cur->lchild);
     else
@@ -285,17 +285,11 @@ void Min(BtNode* root, char& min = 0) {
 
 #### 答案：
 ```cpp
-void Copy(const BtNode* b1_root, const BtNode* b2_root) {
-  b2_root->data = b1_root->data;
-  b2_root->lchild = nullptr, b2_root->rchild = nullptr;
-  if (root->lchild) {
-    b2_root->lchild = new BtNode;
-    Copy(root->lchild, b2_root->lchild);
-  }
-  if (root->rchild) {
-    b2_root->rchild = new BtNode;
-    Copy(root->rchild, b2_root->rchild);
-  }
+void Copy(const BtNode*& b1_root, const BtNode*& b2_root) {
+  if (!b1_root) return;
+  b2_root = new Node(b1_root->data);
+  Copy(b1_root->left, b2_root->left);
+  Copy(b1_root->rchild, b2_root->rchild);
 }
 ```
 
