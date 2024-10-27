@@ -1,5 +1,4 @@
 // NOTE: 四则运算中对于括号要特殊处理，处理巧妙，有分治那味了。
-// TODO: 支持多位数四则表达式运算。
 #include <iostream>
 #include <string>
 

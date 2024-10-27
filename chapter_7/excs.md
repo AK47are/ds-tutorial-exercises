@@ -242,8 +242,8 @@ int Transform(const Btree& t, int arr[]) {
 int LeaveCount(BTree& t) {
   int count = 0;
   for (int i = 0; i < t.Size(); ++i) {
-    if (t[i] != '#' && 2 * root + 1 >= t.Size()
-      || (t[2 * root + 1] == '#' && t[2 * root + 2] == '#')) 
+    if (t[i] != '#' && 2 * i + 1 >= t.Size()
+      || (t[2 * i + 1] == '#' && t[2 * i + 2] == '#')) 
         ++count;
   }
   return count;
