@@ -60,13 +60,12 @@ class SqList {
     ++length_;
   }
 
-  T Erase(const size_t index) {
+  void Erase(const size_t index) {
     T rtn = arr_[index];
     for (int i = index; i < length_ - 1; ++i) {
       arr_[i] = arr_[i + 1];
     }
     --length_;
-    return rtn;
   }
 
   friend std::ostream& operator<<(std::ostream& os, const SqList& s) {

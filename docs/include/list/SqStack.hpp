@@ -17,7 +17,7 @@ class SqStack : public SqList<T, MAX> {
     Insert(data, this->Size());
     return *this;
   }
-  T Pop() { return Erase(this->Size() - 1); }
+  void Pop() { Erase(this->Size() - 1); }
   const T& GetTop() const { return this->operator[](List::Size() - 1); }
   ~SqStack() = default;
 };

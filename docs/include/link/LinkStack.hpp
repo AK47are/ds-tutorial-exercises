@@ -22,8 +22,8 @@ class LinkStack : public LinkList<T> {
   // using List::LinkList; clang++ 报错
   const Node* End() const override { return List::End(); }
   const Node* Begin() const { return List::Begin(); }
-  Node* Push(const T data) { return List::Insert(data, List::Begin()); }
-  Node* Pop() { return List::Erase(List::Begin()); }
+  void Push(const T data) { return List::Insert(data, List::Begin()); }
+  void Pop() { return List::Erase(List::Begin()); }
   const T& GetTop() const { return List::Begin()->data; }
   virtual ~LinkStack() = default;
 };

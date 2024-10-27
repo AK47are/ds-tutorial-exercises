@@ -23,22 +23,20 @@ class SqQueue : public SqList<T, MAX> {
 
   const T& GetFront() const { return this->operator[](front); }
   const T& GetRear() const { return this->operator[](rear); }
-  SqQueue& EnQueue(const T data) {
+  void EnQueue(const T data) {
     if (!List::IsFull()) {
       rear = (rear + 1) % MAX;
       List::operator[](rear) = data;
       ++this->GetLength();
     }
-    return *this;
   }
-  T DeQueue() {
+  void DeQueue() {
     T rtn;
     if (!List::IsEmpty()) {
       rtn = operator[](front);
       front = (front + 1) % MAX;
       --this->GetLength();
     }
-    return rtn;
   }
 
   friend std::ostream& operator<<(std::ostream& os, const SqQueue& s) {
