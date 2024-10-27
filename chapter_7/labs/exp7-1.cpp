@@ -24,7 +24,7 @@ void CreateTree(LBTree<char>& t, const SqString& str) {
       is_right = true;
     } else if (str[i] == ')') {
       // cout << "s: " << s.GetTop()->data << "\n";
-      cur = s.Pop()->data;
+      cur = s.GetTop(), s.Pop();
     } else {
       if (is_right == false) {
         cur->left = new BtNode<char>(str[i]);
@@ -44,7 +44,7 @@ int main() {
   cout << t << "\n";
   cout << "H 结点孩子值：" << t.Find('H')->left->data << " "
        << t.Find('H')->right->data << "\n";
-  cout << "高度：" << t.Depth() << "\n";
+  cout << "高度：" << t.Height() << "\n";
   t.Delete(t.GetRoot());
   cout << t << "\n";
 }

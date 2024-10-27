@@ -11,7 +11,8 @@ struct Post {
 void Hanoi1(Post& x, Post& y, Post& z, int n) {
   if (n == 0) return;
   Hanoi1(x, z, y, n - 1);
-  z.s.Push(x.s.Pop());
+  z.s.Push(x.s.GetTop());
+  x.s.Pop();
   // std::cout << "(" << x.name << " -> " << z.name << ")\n";
   Hanoi1(y, x, z, n - 1);
 }
@@ -22,7 +23,8 @@ void Hanoi2(Post& x, Post& y, Post& z, int n) {
   int count = 0, before, after, before_prev;
   int end = pow(2, n - 1);
   auto move = [](Post* x, Post* z) {
-    z->s.Push(x->s.Pop());
+    z->s.Push(x->s.GetTop());
+    x->s.Pop();
     // std::cout << "(" << x->name << " -> " << z->name << ")\n";
   };
   while (++count) {
