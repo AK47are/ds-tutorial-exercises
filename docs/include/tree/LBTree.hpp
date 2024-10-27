@@ -38,6 +38,15 @@ class LBTree {
     return root;
   }
 
+  int Depth(const Node* root, const Node* target, int depth) const {
+    if (!root) return -1;
+    if (root->left == target || root->right == target) return depth + 1;
+    int left_depth = Depth(root->left, target, depth + 1),
+        right_depth = Depth(root->right, target, depth + 1);
+    if (left_depth != -1) return left_depth;
+    return right_depth;
+  }
+
  public:
   enum { PreOrder = 1, InOrder, PostOrder };
   LBTree() : root_(nullptr) {}
@@ -95,27 +104,6 @@ class LBTree {
     return *this;
   }
 
-  // 转化成层序遍历数组。
-  int Transform(Node* arr[]) {
-    int length = 0;
-    LinkQueue<Node*> temp;
-    Node* cur = GetRoot();
-    while (cur != nullptr) {
-      arr[length++] = cur->data;
-      while (arr[length] != nullptr) ++length;
-      if (cur->lchild != nullptr)
-        temp.EnQueue(cur->lchild);
-      else
-        arr[length * 2 - 1] = nullptr;
-      if (cur->rchild != nullptr)
-        temp.EnQueue(cur->rchild);
-      else
-        arr[length * 2] = nullptr;
-      cur = (Size() != 0) ? temp.DeQueue() : nullptr;
-    }
-    return length;
-  }
-
   Node*& GetRoot() { return root_; }
   const Node* GetRoot() const { return root_; }
 
@@ -128,11 +116,21 @@ class LBTree {
   }
   int Size() const { return Size(GetRoot()); }
 
-  int Depth() const { return Depth(GetRoot()); }
+  int Height() const { return Height(GetRoot()); }
+  int Height(const Node* root) const {
+    // 一定要是 -1 ,不然会统计成经过结点的数量而不是边。
+    // 也可以设计成自上向下的形式。
+    if (!root) return -1;
+    int left_height = Height(root->left), right_height = Height(root->right);
+    return 1 + ((left_height < right_height) ? right_height : left_height);
+  }
+
+  // 不能简单地通过高度相减得到。
   int Depth(const Node* root) const {
-    if (!root) return 0;
-    int left_depth = Depth(root->left), right_depth = Depth(root->right);
-    return 1 + ((left_depth < right_depth) ? right_depth : left_depth);
+    if (GetRoot() == root)
+      return 0;
+    else
+      return Depth(GetRoot(), root, 0);
   }
 
   Node* Find(Node* root, const T& data) {
