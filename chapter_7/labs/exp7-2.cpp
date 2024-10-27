@@ -15,7 +15,8 @@ void CreateTree(LBTree<char>& t, const SqString& str) {
     } else if (str[i] == ',') {
       is_right = true;
     } else if (str[i] == ')') {
-      cur = s.GetTop(), s.Pop();
+      s.Pop();
+      cur = s.GetTop();
     } else {
       if (is_right == false) {
         cur->left = new BtNode<char>(str[i]);

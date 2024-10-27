@@ -24,7 +24,8 @@ void CreateTree(LBTree<char>& t, const SqString& str) {
       is_right = true;
     } else if (str[i] == ')') {
       // cout << "s: " << s.GetTop()->data << "\n";
-      cur = s.GetTop(), s.Pop();
+      s.Pop();
+      cur = s.GetTop();
     } else {
       if (is_right == false) {
         cur->left = new BtNode<char>(str[i]);
