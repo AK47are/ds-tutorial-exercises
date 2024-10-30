@@ -2,6 +2,7 @@
 #define SQSTRING_HPP_
 
 #include <cstring>
+#include <istream>
 
 #include "DynList.hpp"
 
@@ -33,7 +34,7 @@ class SqString : public DynList<char, 15> {
     for (int i = 0; i < str.Size(); ++i) this->GetArr()[i] = str[i];
   }
 
-  const char* GetCstr() {
+  const char* GetCStr() {
     this->GetArr()[this->Size()] = '\0';
     return this->GetArr();
   }
@@ -123,19 +124,35 @@ class SqString : public DynList<char, 15> {
   }
 
   bool operator==(const SqString& str) const {
-    return (strcmp(this->GetArr(), str.GetArr()) == 0);
+    return (strcmp(const_cast<SqString*>(this)->GetCStr(),
+                   const_cast<SqString*>(&str)->GetCStr()) == 0);
+  }
+  bool operator!=(const SqString& str) const {
+    return !(strcmp(const_cast<SqString*>(this)->GetCStr(),
+                    const_cast<SqString*>(&str)->GetCStr()) == 0);
   }
   bool operator<(const SqString& str) const {
-    return (strcmp(this->GetArr(), str.GetArr()) < 0);
+    return !(strcmp(const_cast<SqString*>(this)->GetCStr(),
+                    const_cast<SqString*>(&str)->GetCStr()) < 0);
   }
   bool operator>(const SqString& str) const {
-    return (strcmp(this->GetArr(), str.GetArr()) > 0);
+    return !(strcmp(const_cast<SqString*>(this)->GetCStr(),
+                    const_cast<SqString*>(&str)->GetCStr()) > 0);
   }
   bool operator<=(const SqString& str) const {
     return (*this == str || *this < str);
   }
   bool operator>=(const SqString& str) const {
     return (*this == str || *this > str);
+  }
+
+  friend std::istream& operator>>(std::istream& is, SqString& s) {
+    // HACK: 不能读取任意长的字符串。
+    is >> s.GetArr();
+    int i = 0;
+    while (s.GetArr()[i] != '\0') ++i;
+    s.SetLength(i);
+    return is;
   }
 
   ~SqString() = default;

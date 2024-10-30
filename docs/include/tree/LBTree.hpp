@@ -87,7 +87,8 @@ class LBTree {
       if (cur == li.end()) break;
       temp->right = new Node(*cur), ++cur;
       queue.EnQueue(temp->right);
-      temp = queue.DeQueue()->data;
+      temp = queue.GetFront();
+      queue.DeQueue();
     }
   }
 
@@ -154,8 +155,24 @@ class LBTree {
     if (order == PostOrder) os << root->data;
   }
 
+  void DispTree(const BtNode<T>* root) {
+    if (!root) return;
+    std::cout << root->data;
+    if (root->left || root->right) {
+      std::cout << "(";
+      DispTree(root->left);
+      std::cout << ", ";
+      DispTree(root->right);
+      std::cout << ")";
+    }
+  }
+  void DispTree() {
+    DispTree(GetRoot());
+    std::cout << "\n";
+  }
+
   friend std::ostream& operator<<(std::ostream& os, const LBTree& t) {
-    t.Show(os, t.GetRoot(), 1);
+    t.Show(os, t.GetRoot(), PreOrder);
     return os;
   }
 
