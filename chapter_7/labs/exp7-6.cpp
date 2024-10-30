@@ -17,7 +17,8 @@ int Width(const LBTree<char>& t) {
   while (q.Size() != 0) {
     after_width = 0;
     for (int i = 0; i < now_width; ++i) {
-      cur = q.GetFront(), q.DeQueue();
+      cur = q.GetFront();
+      q.DeQueue();
       if (cur->left) q.EnQueue(cur->left), ++after_width;
       if (cur->right) q.EnQueue(cur->right), ++after_width;
     }
@@ -26,6 +27,7 @@ int Width(const LBTree<char>& t) {
   }
   return max_width;
 }
+
 int main() {
   LBTree<char> t("ABDEHJKLMNCFGI", "DBJHLKMNEAFCGI", 14,
                  LBTree<char>::PreOrder);

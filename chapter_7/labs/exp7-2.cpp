@@ -34,11 +34,11 @@ int main() {
   LBTree<char> t;
   SqString str{"A(B(D,E(H(J,K(L,M(,N))))),C(F,G(,I)))"};
   CreateTree(t, str);
-  t.Show(cout, t.GetRoot(), 0);
+  t.Show(cout, t.GetRoot(), t.PreOrder);
   cout << "\n";
-  t.Show(cout, t.GetRoot(), 1);
+  t.Show(cout, t.GetRoot(), t.InOrder);
   cout << "\n";
-  t.Show(cout, t.GetRoot(), 2);
+  t.Show(cout, t.GetRoot(), t.PostOrder);
   cout << "\n";
   cout << "Size: " << t.Size() << "\n";
 }
