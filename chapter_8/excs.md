@@ -22,7 +22,7 @@
 对于稠密图和稀疏图，采用邻接矩阵和邻接表哪个更好一些？
 
 #### 答案：
-对于稠密图，使用邻接矩阵；对于稀疏图，使用邻接表。
+对于稠密图，使用邻接矩阵；对于稀疏图，使用邻接表，因为边比较少。
 
 ---
 
@@ -45,8 +45,37 @@
 ![](../docs/image/8.49.png)
 
 #### 答案：
-深度优先：{0, 1, 4, 3, 2, 3}
-广度优先：{0, 1, 2, 3, 4, 5}
+深度优先：
+```
+{0, 1, 4, 5, 2, 3}
+{0, 1, 5, 4, 2, 3}
+{0, 1, 4, 5, 3, 2}
+{0, 1, 4, 5, 3, 2}
+{0, 2, 3, 1, 4, 5}
+{0, 2, 3, 1, 5, 4}
+{0, 2, 1, 4, 5, 3}
+{0, 2, 1, 5, 4, 3}
+{0, 3, 2, 1, 4, 5}
+{0, 3, 2, 1, 5, 4}
+{0, 3, 1, 4, 5, 2}
+{0, 3, 1, 5, 4, 2}
+```
+
+广度优先：
+```
+{0, 1, 2, 3, 4, 5}
+{0, 2, 3, 1, 4, 5}
+{0, 3, 2, 1, 4, 5}
+{0, 1, 3, 2, 4, 5}
+{0, 2, 1, 3, 4, 5}
+{0, 3, 1, 2, 4, 5}
+{0, 1, 2, 3, 5, 4}
+{0, 2, 3, 1, 5, 4}
+{0, 3, 2, 1, 5, 4}
+{0, 1, 3, 2, 5, 4}
+{0, 2, 1, 3, 5, 4}
+{0, 3, 1, 2, 5, 4}
+```
 
 ---
 
@@ -144,7 +173,7 @@ graph TD;
 $Diljstra$ 算法用于求单源最短路径，为何求一个图中所有顶点对之间的最短路径，可以以每个顶点作为源点调用 $Dijkstra$ 算法，$Floyd$ 算法和这种算法相比有什么优势？
 
 #### 答案：
-代码更简洁，只需简单的 for 循环嵌套。可以求最长路径。
+整体效率更高，代码更简洁，只需简单的 for 循环嵌套。可以求最长路径。
 
 ---
 
@@ -158,7 +187,7 @@ $Diljstra$ 算法用于求单源最短路径，为何求一个图中所有顶点
 
 #### 答案：
 1. $[a, b, e, c, d], [a, e, b, c, d], [a, b, c, e, d]$
-2. 没有优先级相同的结点的图。
+2. 没有优先级相同的结点的图。每次操作只有一个入度为 0 的顶点。
 3. 括扑排序，因为它保证了编号小的结点一定为一个边的前驱结点。如果出现环，环结点将不会包括。
 
 ---
@@ -183,7 +212,7 @@ $Diljstra$ 算法用于求单源最短路径，为何求一个图中所有顶点
     |  1  |  ∞  |  0  |  5  |  ∞  |  ∞  |  ∞  |
     |  2  |  ∞  |  ∞  |  0  |  4  |  3  |  ∞  |
     |  3  |  ∞  |  ∞  |  ∞  |  0  |  ∞  |  3  |
-    |  4  |  ∞  |  ∞  |  ∞  |  ∞  |  0  |  ∞  |
+    |  4  |  ∞  |  ∞  |  ∞  |  ∞  |  0  |  3  |
     |  5  |  ∞  |  ∞  |  ∞  |  ∞  |  ∞  |  0  |
 
 2. 有向图：
@@ -195,11 +224,12 @@ graph LR
     v2--4-->v3;
     v2--3-->v4;
     v3--4-->v5;
+    v4--3-->v5;
 ```
 
 3. 关键路径
 
-{<v0, v1>, <v1, v2>, <v2, v3>, <v3, v4>}
+{<v0, v1>, <v1, v2>, <v2, v3>, <v3, v5>}
 
 ---
 
@@ -212,14 +242,14 @@ graph LR
 #### 答案：
 1. 求入度
 ```cpp
-void CaculateInDegree(int** g, int m) {
+void CaculateInDegree(int** g) {
     int in_degree;
-    for (int i = 0; i < m; ++i) {
+    for (int i = 0; i < MAXE; ++i) {
         in_degree = 0;
-        for (int j = 0; j < m; ++j) {
+        for (int j = 0; j < MAXE; ++j) {
             if (v[j][i] != 0) ++in_degree;
         }
-        cout << "结点 " << i  " 的入度："<< in_degree << "\n";
+        cout << "结点 " << i << " 的入度："<< in_degree << "\n";
     }
 
 }
@@ -234,7 +264,7 @@ void CaculateOutDegree(int** g, int m) {
         for (int j = 0; j < m; ++j) {
             if (v[i][j] != 0) ++out_degree;
         }
-        cout << "结点 " << i  " 的出度："<< out_degree << "\n";
+        cout << "结点 " << i << " 的出度："<< out_degree << "\n";
     }
 
 }
@@ -266,14 +296,16 @@ int CountZeroOutDegreeVertices(int** g, int m) {
 #### 答案：
 1. 求入度
 ```cpp
-void CaculateInDegree(AdjGraph* G, int m) {
+void CaculateInDegree(AdjGraph* G) {
     int in_degree;
-    for (int i = 0; i < m; ++i) {
+    for (int i = 0; i < MAXE; ++i) {
         in_degree = 0;
-        for (auto cur = G[i].Begin(); cur != G[i].End(); cur = cur->next) {
-            if (cur->data == i) ++in_degree;
+        for (int j = 0; j < MAXE; ++j) {
+            for (auto cur = G[j].Begin(); cur != G[j].End(); cur = cur->next) {
+                if (cur->data == i) ++in_degree;
+            }
         }
-        cout << "结点 " << i  " 的入度："<< in_degree << "\n";
+        cout << "结点 " << i << " 的入度："<< in_degree << "\n";
     }
 
 }
@@ -281,18 +313,20 @@ void CaculateInDegree(AdjGraph* G, int m) {
 
 2. 求出度
 ```cpp
-void CaculateOutDegree(AdjGraph* G, int m) {
-    for (int i = 0; i < m; ++i) {
-        cout << "结点 " << i  " 的出度："<< G[i].Size() << "\n";
+void CaculateOutDegree(AdjGraph* G) {
+    for (int i = 0; i < MAXE; ++i) {
+        for (int j = 0; j < MAXE; ++j) {
+        cout << "结点 " << i << " 的出度："<< G[i].Size() << "\n";
         }
+    }
 }
 ```
 
 3. 求出度为 0 的顶点数
 ```cpp
-int CountZeroOutDegreeVertices(AdjGraph* G, int m) {
-    int count = 0, flag;
-    for (int i = 0; i < m; ++i) {
+int CountZeroOutDegreeVertices(AdjGraph* G) {
+    int count = 0;
+    for (int i = 0; i < MAXE; ++i) {
         if (G[i].Size() == 0) ++count;
     }
     return count;
@@ -326,3 +360,128 @@ bool hasCycle(AdjGraph *G, int v) {
 ```
 
 ### Q17:
+假设无向图 $G$ 采用邻接表存储，设计一个算法，判断图 $G$ 是否为一棵树，若为树，返回真；否则返回假。
+
+#### 答案：
+```cpp
+int count = 0;
+void Count(AdjGraph *G, Node* root, bool* visited) {
+    int index = root->data;
+    if (visited[index] == 1) return;
+    visited[index] = 1;
+    for (auto cur = G[index].Begin(); cur != G[index].End(); cur = cur->next) {
+        ++count;
+        Count(G, cur, visited);
+    }
+}
+
+bool IsTree(AdjGraph *G, int v) {
+    bool visited[G->Size()]{0};
+    if (Count(G, v, visited) == MAXE - 1);
+    if (count != G->Size() - 1) return false;
+    bool isTree = true;
+    for (int i = 0; i < G->Size(); ++i) {
+        if (visited[i] == 0) {
+            isTree = false;
+            break;
+        }
+    }
+    return isTree;
+}
+
+```
+
+### Q18:
+设 5 地（0 ~ 4）之间架设有 6 座桥（A ~ F），如图 8.53 所示，设计一个算法，从某地出发，恰巧每座桥经过依次，最后仍回到原地。
+
+![](../docs/image/8.53.png)
+
+#### 答案：
+```cpp
+Func1(int ** g, int place, const int& end) {
+    if (place == end) {
+        bool flag = 1;
+        for (int i = 0; i < MAXE; ++i) {
+            for (int j = 0; j < MAXE; ++j) {
+                if (g[i][j] != 0) {
+                    flag = 0;
+                }
+            }
+            if (flag == 0) break;
+        }
+        if (flag == 1)
+            cout << "找到路径\n";
+    }
+    for (int i = 0; i < MAXE; ++i) {
+        if (g[place][i] != 0) {
+            g[place][i] = 0; // 默认修改对称的两个值。
+            Func(g, i);
+            g[place][i] = 1;
+        }
+    }
+}
+```
+
+---
+
+### Q19:
+设不带权无向图 $G$ 采用邻接表表示，设计一个算法求源点 $i$ 到其余各顶点的最短路径长度。
+
+#### 答案：
+```cpp
+void Dijkstra(AdjGraph* G, int m) {
+    int path[MAXE];
+    for (int i = 0; i < MAXE; ++i) path[i] = i;
+    bool visited[MAXE];
+    visited[m] = 1;
+    unsigned close[MAXE] = {~0};
+    close[m] = 0;
+    for (auto cur = G[m].Begin(); cur != G[m].End(); cur = cur->next) {
+        close[cur->index] = 1;
+    }
+    while (true) {
+        int min_index = -1;
+        for (int i = 0; i < MAXE; ++i) {
+            if (visited[i] == 0)
+                if (min_index == -1 || close[i] < close[min_index])
+                    min_index = i;
+        }
+        if (min_index == -1 || min_index == ~0) break;
+        visited[min_index] = 1;
+        for (auto cur = G[min_index].Begin(); cur != G[min_index].End(); cur = cur->next) {
+            if (close[min_index] + 1 > close[cur->index]) {
+                path[cur->index] = min_index;
+                close[cur->index] =close[min_index] + 1;
+            }
+        }
+    }
+}
+```
+
+---
+
+### Q20:
+对于一个带权有向图，设计一个算法输出从顶点 $i$ 到顶点 $j$ 的所有路径及其长度，并调用该算法求出图 8.35 中的顶点 0 到 顶点 3 的所有路径及其长度。
+
+![](../docs/image/8.35.png)
+
+#### 答案：
+```cpp
+void Disp(int ** g, int i, const int& j, LinkStack& path) {
+    if (i == j) {
+        cout << path << "\n";
+        cout << "长度：" << path.Size() << "\n";
+        return;
+    }
+    for (int k = 0; k < MAXE; ++k) {
+        if (g[i][k] != None) {
+            int temp = g[i][k];
+            g[i][k] = None;
+            path.Push(k);
+            Disp(g, k, j);
+            path.pop();
+            g[i][k] = temp;
+        }
+    }
+}
+```
