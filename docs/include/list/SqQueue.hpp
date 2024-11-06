@@ -19,7 +19,7 @@ class SqQueue : public SqList<T, MAX> {
  public:
   SqQueue() : List(), front(0), rear(-1) {}
   SqQueue(std::initializer_list<T> il)
-      : List(il), front(0), rear(il.Size() - 1) {}
+      : List(il), front(0), rear(il.size() - 1) {}
 
   const T& GetFront() const { return this->operator[](front); }
   const T& GetRear() const { return this->operator[](rear); }

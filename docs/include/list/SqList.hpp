@@ -47,7 +47,7 @@ class SqList {
 
   bool IsEmpty() const { return (length_ == 0); }
   bool IsFull() const { return (length_ == MAX); }
-  size_t Size() const { return length_; }
+  const size_t Size() const { return length_; }
   T& operator[](const size_t index) { return arr_[index]; }
   const T& operator[](const size_t index) const { return arr_[index]; }
 
