@@ -22,7 +22,7 @@ class AdjGraph {
   AdjGraph(int edges[MAXV][MAXV]) {
     for (int i = 0; i < MAXV; ++i) {
       for (int j = 0; j < MAXV; ++j) {
-        if (edges[i][j] != INT_MAX)
+        if (edges[i][j] != NO_EDGE)
           vertex_[i].Insert(AdjData{j, edges[i][j]}, vertex_[i].Size());
       }
     }
