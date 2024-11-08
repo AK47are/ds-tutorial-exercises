@@ -1,3 +1,4 @@
+// TODO: 修改代码,使三元组顺序存储。修改矩阵转置算法。
 #include <iostream>
 #include <ostream>
 
@@ -128,3 +129,52 @@ int main() {
   cout << "A + B: \n" << A + B;
   cout << "A * B: \n" << A * B;
 }
+
+// template <int M, int N>
+// class TSMatrix {
+//   vector<TupNode> arr_;
+//
+//  public:
+//   TSMatrix() = default;
+//   TSMatrix(const int A[M][N]) {
+//     for (int i = 0; i < M; ++i) {
+//       for (int j = 0; j < N; ++j) {
+//         if (A[i][j] != 0) arr_.push_back(TupNode{i, j, A[i][j]});
+//       }
+//     }
+//   }
+//
+//   vector<TupNode>& GetArr() { return arr_; }
+//
+//   TSMatrix<N, M> Transpose() {
+//     TSMatrix<N, M> B;
+//     int num[N];
+//     int cpot[N];
+//     fill(num, num + N, 0);
+//     fill(cpot, cpot + N, 0);
+//     for (auto cur : arr_) ++num[cur.col];
+//     for (int i = 1; i < N; ++i) cpot[i] = cpot[i - 1] + num[i - 1];
+//     B.GetArr().resize(arr_.size());
+//     for (int i = 0; i < arr_.size(); ++i) {
+//       B.GetArr()[cpot[arr_[i].col]] =
+//           TupNode{arr_[i].col, arr_[i].row, arr_[i].data};
+//       ++cpot[arr_[i].col];
+//     }
+//     return B;
+//   }
+//
+//   friend std::ostream& operator<<(std::ostream& os, const TSMatrix<M, N>& t)
+//   {
+//     int cur = 0;
+//     for (int i = 0; i < M; ++i) {
+//       for (int j = 0; j < N; ++j) {
+//         cout << " ";
+//         if (t.arr_[cur].row == i && t.arr_[cur].col == j)
+//           cout << t.arr_[cur++].data;
+//         else
+//           cout << 0;
+//       }
+//       cout << "\n";
+//     }
+//     return os;
+//   }
