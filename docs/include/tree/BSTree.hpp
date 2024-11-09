@@ -4,6 +4,7 @@
 #include <initializer_list>
 
 #include "LBTree.hpp"
+// 不能出现相同关键字，不然查找会紊乱。
 template <typename DataType>
 class BSTree : public LBTree<DataType> {
   using Node = BtNode<DataType>;
