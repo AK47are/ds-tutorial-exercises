@@ -10,24 +10,36 @@
 顺序查找
 ```mermaid
 graph TD
+    do-->q0
     do-->for
+    for-->q1
     for-->if
+    if-->q2
     if-->repeat
+    repeat-->q3
     repeat-->while
+    while-->q4
+    while-->q5
 ```
 
 折半查找
 ```mermaid
 graph TD
-    if-->for
+    if-->do
+    do-->q0
+    do-->for
+    for-->q1
+    for-->q2
     if-->repeat
-    for-->do
+    repeat-->q3
     repeat-->while
+    while-->q4
+    while-->q5
 ```
 
 2. $ASL_1 = 0.97$  $ASL_2 = 1.07$
 
-3. $ASL_1 = 1.02$  $ASL_2 = 1.07$
+3. $ASL_1 = 1.04$  $ASL_2 = 1.3$
 
 ---
 
@@ -35,7 +47,7 @@ graph TD
 对于有序表 $A[0 .. 10]$ 在等概率的情况下求采用折半查找时成功和不成功的平均查找长度。对于有序表 (12, 18, 24, 35, 47, 50, 62, 83, 90, 115, 134) ，当用折半查找法 90 时需要进行多少词查找可确定成功？查找 47 时需要进行多少次查找可确定成功？查找 100 时需要进行多少次查找才能确定不成功？
 
 #### 答案：
-2, 4, 4
+3, 3.67, 2, 4, 3
 
 ---
 
@@ -81,9 +93,9 @@ graph TD
     J-->I
 ```
 
-2. $ASL_1 = 3.6$
+2. $ASL_1 = 3$
 
-3. $ASL_2 = 3.1$
+3. $ASL_2 = 3.64$
 
 ---
 
@@ -452,3 +464,119 @@ graph TD;
     class 2,4,11,15 redNode;
     classDef redNode fill:#ff0000,color:#000000;
 ```
+
+---
+
+### Q10:
+已知一棵 5 阶 B 树中有 53 个关键字，则树的最大高度是多少？
+
+#### 答案：
+4 + 1 = 5
+
+---
+
+### Q11:
+设有一组关键字 (19, 1, 23, 14, 55, 20, 84, 27, 68, 11, 10, 77)，其哈希函数为 $h(key) = key % 13$ 。采用开放地址法中的线性探测法解决冲突，试在 0 ~ 18 的哈希表中对该关键字序列构造哈希表，并求成功和不成功的情况下的平均查找长度。
+
+#### 答案：
+1.92, 4.46
+
+---
+
+### Q12:
+设计一个折半查找算法，求查找到关键字为 $k$ 的记录所需关键字的比较次数。假设 $k$ 与 $R[i].key$ 比较得到 3 种情况，即 $k == R[i].key, k < R[i].key$ 或者 $k > R[i].key$ ，记为一次比较（在教材中讨论关键字比较次数都是这样假设的）。 
+
+#### 答案：
+```cpp
+void BSLength(int arr[], int n, int key) {
+    int low = 0, high = n - 1, mid, length;
+    while (low != high) {
+        mid = (low + high) / 2;
+        if (arr[mid] < key)
+            low = mid + 1;
+        else if (arr[mid] > key)
+            high = mid - 1;
+        else
+            return length;
+        ++length;
+    }
+    return length - 1;
+}
+```
+
+---
+
+### Q13:
+设计一个算法，判断给定的二叉树是否为二叉树，假设二叉树中结点关键字均为正整数且均不相同。
+
+#### 答案：
+```cpp
+bool IsBSTree(BtNode<int>* root) {
+  if (!root) return true;
+  if ((!root->left || root->data > root->left->data) &&
+      (!root->right || root->data < root->right->data) &&
+      IsBSTree(root->left) && IsBSTree(root->right))
+    return true;
+  else
+    return false;
+}
+
+```
+
+---
+
+### Q14:
+设计一个算法，在非空二叉排序树 $bt$ 中求出指定关键字为 $k$ 的结点的层次。
+```cpp
+int Level(BtNode<int>& bt, int k) {
+    return bt.Depth(bt.Find(k)) + 1;
+}
+```
+
+---
+
+### Q15:
+设计一个哈希表 $ha[0..m - 1]$ 存放 $n$ 个元素，哈希函数采用除留余数法，哈希函数为 $H(key) = key % p(p \le m)$ ，解决冲突采用开放地址法的平方探测法。
+
+1. 设计哈希表的类型。
+2. 设计在哈希表中查找指定关键字的算法。
+
+#### 答案：
+```cpp
+enum Status { EMPTY, OCCUPIED, DELETED };
+template <typename T>
+struct LPNode {
+  int key;
+  T data;
+  Status status = EMPTY;
+};
+
+template <typename T, size_t CAPACITY>
+class LPTable {
+  using Node = LPNode<T>;
+
+ private:
+  Node table[CAPACITY];
+
+ public:
+  Node& Search(const int& key) {
+    int adr = Hash(key), count = 0;
+    int first_deleted = -1;
+    while (table[adr].status != EMPTY) {
+      if (table[adr].status == OCCUPIED && table[adr].key == key) break;
+      if (first_deleted == -1 && table[adr].status == DELETED)
+        first_deleted = adr;
+      ++count;
+      adr = (adr + count * count) % CAPACITY;
+    }
+    if (table[adr].key != key)
+      if (first_deleted != -1) adr = first_deleted;
+    table[adr].key = key;
+    table[adr].status = OCCUPIED;
+    return table[adr];
+  }
+
+};
+```
+
+---
