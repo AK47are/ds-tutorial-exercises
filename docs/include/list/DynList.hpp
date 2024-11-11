@@ -22,7 +22,7 @@ class DynList : public SqList<T, UNIT> {
       while (this->GetLength() >= Capacity()) {
         ++expand_frequency_;
       }
-      temp = new char[Capacity()];
+      temp = new T[Capacity()];
       for (int i = 0; i < this->GetLength(); ++i) {
         temp[i] = this->GetArr()[i];
       }
@@ -37,7 +37,32 @@ class DynList : public SqList<T, UNIT> {
   }
 
  public:
-  using List::SqList;
+  DynList() = default;
+  DynList(const DynList& list) {
+    SetLength(list.Size());
+    for (int i = 0; i != this->Size(); ++i) {
+      this->GetArr[i] = list[i];
+    }
+  }
+
+  DynList(std::initializer_list<T> il) {
+    SetLength(il.size());
+    int pos = 0;
+    for (auto cur = il.begin(); cur != il.end(); ++cur) {
+      this->GetArr()[pos++] = *cur;
+    }
+  }
+
+  DynList& operator=(const DynList& l) {
+    this->Clear();
+    SetLength(l.Size());
+    if (this != &l) {
+      for (int i = 0; i < l.Size(); ++i) {
+        this->GetArr()[i] = l[i];
+      }
+    }
+    return *this;
+  }
   const size_t Capacity() const { return (expand_frequency_ + 1) * UNIT; }
 
   void Insert(const T x, const size_t index) {

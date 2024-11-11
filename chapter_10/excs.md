@@ -155,8 +155,8 @@ void Sort(int a[], int n) {
 void sort(int a[], int n, int m) {
     int k = 0;
     while (k != m) {
-        auto min = max_element(a + k, a + n);
-        swap(*min,  a[k]);
+        auto mmax = max_element(a + k, a + n);
+        swap(*max,  a[k]);
         ++k;
     }
 }
@@ -180,8 +180,8 @@ void QuickSort(int a[], int size) {
         swap(a[low], a[high]);
     }
     swap(a[0], a[low]);
-    QuickSort(a,low - 1);
-    QuickSort(a +low + 1, size);
+    QuickSort(a,low);
+    QuickSort(a +low + 1, size - low - 1);
 }
 ```
 
