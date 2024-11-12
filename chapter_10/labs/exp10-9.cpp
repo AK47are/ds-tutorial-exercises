@@ -28,14 +28,10 @@ void CountSortDigit(vector<int>& a, const int exp) {
 void RadixSort(vector<int>& a) {
   auto min = min_element(a.begin(), a.end());
   if (*min < 0) return;  // 不考虑负数。
-  auto max = max_element(a.begin(), a.end());
-  int exp;
-  for (exp = 1; exp < *max; exp *= 10) {
+  int max = *max_element(a.begin(), a.end());
+  for (int exp = 1; exp < max; exp *= 10) {
     CountSortDigit(a, exp);
   }
-  // 一打印 *max 会程序结果会错误。原因未知。
-  // cout << *max << "\n";
-  // cout << exp << "\n";
 }
 
 int main() { TestSort(RadixSort); }

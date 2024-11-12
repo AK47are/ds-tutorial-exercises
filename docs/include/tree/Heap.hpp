@@ -28,6 +28,7 @@ class Heap {
       }
     }
   }
+
   void HeapDown(int i) {
     while (true) {
       int l = Left(i), r = Right(i), res = i;
@@ -58,6 +59,7 @@ class Heap {
     arr_.Erase(Size() - 1);
     HeapDown(0);
   };
+
   T Top() const { return arr_[0]; };
 };
 
