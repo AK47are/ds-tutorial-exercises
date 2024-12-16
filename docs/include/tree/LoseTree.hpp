@@ -5,6 +5,8 @@
 #include <functional>
 
 // 默认败者为更小的值，K 路归并。INT_MIN 代表无值。
+// 如果用堆进行 k 路归并，需要将数据和索引绑定。
+// 相较于堆，将数据与索引的逻辑分离，比较次数少一倍，占用空间更多。
 template <int K, typename T = int, T NoValue = INT_MIN,
           typename Comp = std::less<T>>
 class LoseTree {
