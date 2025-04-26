@@ -1,5 +1,5 @@
-#ifndef LKBTREE_HPP_
-#define LKBTREE_HPP_
+#ifndef LBTREE_HPP_
+#define LBTREE_HPP_
 
 #include <initializer_list>
 #include <iostream>
@@ -7,6 +7,7 @@
 #include "../link/LinkQueue.hpp"
 #include "TreeNode.hpp"
 
+// 链式二叉树
 // NOTE:NodeType 必须继承自 BtNode 。
 template <typename T, template <typename> class NodeType = BtNode>
 class LBTree {
@@ -120,10 +121,11 @@ class LBTree {
   int Height() const { return Height(GetRoot()); }
   int Height(const Node* root) const {
     // 一定要是 -1 ,不然会统计成经过结点的数量而不是边。
+    // 这里认为二叉树的高度（height）：从根节点到最远叶节点所经过的边的数量。
     // 也可以设计成自上向下的形式。
     if (!root) return -1;
     int left_height = Height(root->left), right_height = Height(root->right);
-    return 1 + ((left_height < right_height) ? right_height : left_height);
+    return 1 + std::max(left_height, right_height);
   }
 
   // 不能简单地通过高度相减得到。
